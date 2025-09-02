@@ -2,7 +2,11 @@
 
 # Project Overview
 
-This project is a React + TypeScript demo application that consumes a public or mocked API to display, create, update, and delete items in a data table. The application features:
+Mono repo with tiny [backend](/backend/README.md) and [frontend](/frontend/README.md).
+
+The backend is just a tiny json server for testing purposes/mocked API.
+
+The [frontend](/frontend/README.md) is a React + TypeScript demo application that consumes a [mocked](/backend/README.md) API to display, create, update, and delete items in a data table. The application features:
 - DataTable with sorting, searching, and pagination
 - CRUD operations with modals for adding and editing items
 - State management using Zustand
