@@ -14,4 +14,4 @@ Run prod: `npm run prod`
 
 ## Deployments
 
-Automatic deployment is triggered on merge to master if changes are detected in the backend/ folder.
+Automatic deployment is triggered on merge to main if changes are detected in the backend/ folder.
