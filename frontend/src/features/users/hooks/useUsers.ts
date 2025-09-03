@@ -1,6 +1,6 @@
 import useSWR from 'swr';
-import type { User } from '../types';
-import { fetchJSON } from '../services/api';
+import type { User } from '../../../types';
+import { fetchJSON } from '../../../services/api';
 
 export function useUsers() {
   const { data, error, isLoading, mutate } = useSWR<User[]>(
