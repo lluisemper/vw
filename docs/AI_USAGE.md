@@ -2,6 +2,11 @@
 
 ## Tools Used
 
+### Windsurf
+
+Code suggestions, while you write it thinks what you are going to write next and it creates a 4-5 lines suggestion.
+
+
 ### Claude AI
 
 I have used Claude AI because I can select wether the data is shared. Also I like the response more than other agents like chatgpt, for example, which it always has a very positive attitude.
@@ -117,3 +122,22 @@ Compare state management libraries:
 ```
 
 I ended up picking zustand for its lightweight, no boilerplate like redux and simplicity.
+
+#### Forth question
+
+Generate 100 results of mock data in json format with this structure:
+```
+{
+      "id": ID,
+      "name": string,
+      "email": string,
+      "createdAt": Date,
+      "updatedAt": Date
+    }
+```
+
+#### 5th question
+
+- Show me good patterns using zusthand.
+
+First time using zusthand and I wanted to speed up learning curve.

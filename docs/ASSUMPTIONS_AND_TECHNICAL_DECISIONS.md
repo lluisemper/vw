@@ -55,3 +55,9 @@ Provides accessible modals out of the box.
 - Lightweight and highly customizable table.
 - PEasy to style with tailwind.
 - Avoids reinventing complex table logic.
+
+### Data Fetching
+
+**swr: Reasoning:**
+- Avoids mixing server and client state.
+- Stale-while-revalidate, if cached data, it will be server while fresh one is being requested.
