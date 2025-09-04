@@ -1,10 +1,13 @@
 name: Test
 
 on:
-  push:
-    branches: [main]
   pull_request:
-    branches: [main]
+    branches:
+      - "**"
+
+  push:
+    branches:
+      - main
 
 jobs:
   test:
@@ -23,11 +26,4 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        run: npm run test -- --ci --reporter=dot
-
-      - name: Upload coverage
-        if: success()
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage-report
-          path: coverage/
+        run: npm run test
