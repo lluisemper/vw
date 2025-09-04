@@ -4,16 +4,26 @@
 
 ### Windsurf
 
-Code suggestions, while you write it thinks what you are going to write next and it creates a 4-5 lines suggestion.
+Code suggestions and draft snippets. These were reviewed and adapted with my own technical judgement to ensure they meet the project's standards. I think that this increases productivity however, it has downsides, many times it includes unnecessary things or makes assumptions that are incorrect.
 
+This approach is mainly used to quickly create a structural template that I can build upon.
+
+Example usage:
+
+```
+Generate a typed LoaderSpinner that can be reused using tailwind.
+```
 
 ### Claude AI
 
 I have used Claude AI because I can select wether the data is shared. Also I like the response more than other agents like chatgpt, for example, which it always has a very positive attitude.
 
+Particularly, it has helped me compare technical tools and patterns using libraries that are new to me. This provides a good overview and allows me to compare my ideas with the suggestions. Additionally, it sometimes highlights things I might have overlooked. However, I make sure not to over complicate things.
+
 **Specific Questions Asked:**
 
-#### First question:
+#### question:
+
 **type:** Architecture decision consultation
 
 I based this question on using the latest version of `json-server`.
@@ -52,8 +62,8 @@ React data table with CRUD operations for technical interview
 
 Based on the output of this prompt I recollected some thoughts:
 
-**Navigation:** 
- would prefer single page app. -> No router.
+**Navigation:**
+would prefer single page app. -> No router.
 
 **Rendering:**
 For a small demo, I prefer using pagination rather than infinite scrolling. This reduces the number of elements displayed at once and keeps the table manageable. The search bar allows users to quickly find specific items, which is especially helpful if the table has multiple pages. Without pagination, users might scroll too much or lose track of what they are looking for.
@@ -64,7 +74,8 @@ I prefer debounced searches because they provide a smoother user experience than
 **Updates:**
 Due the time constrain to implement this, I will go with pessimistic updates.
 
-#### Second question:
+#### question:
+
 **type:** Architecture decision consultation
 
 Compare some UI frameworks:
@@ -90,7 +101,7 @@ Compare some UI frameworks:
 
 I decided for tailwind + react table(tanstack) + react-modal(accessibility support) for its lightweight. Every other component will be able to be styled with some basic tailwind classes.
 
-#### Third question:
+#### question:
 
 **type:** Architecture decision consultation
 
@@ -123,9 +134,10 @@ Compare state management libraries:
 
 I ended up picking zustand for its lightweight, no boilerplate like redux and simplicity.
 
-#### Forth question
+#### question
 
 Generate 100 results of mock data in json format with this structure:
+
 ```
 {
       "id": ID,
@@ -136,7 +148,7 @@ Generate 100 results of mock data in json format with this structure:
     }
 ```
 
-#### 5th question
+#### question
 
 - Show me good patterns using zusthand.
 
