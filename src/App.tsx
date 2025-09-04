@@ -1,6 +1,6 @@
-import { useUsers } from './features/users/hooks/useUsers';
-import { DataTableShell } from './components/DataTable/DataTableShell';
-import { UserTable } from './features/users/components/UserTable';
+import { useUsers } from "@/features/users/hooks/useUsers";
+import { DataTableShell } from "@/components/data-table/DataTableShell";
+import { UserTable } from "@/features/users/components/UserTable";
 
 function App() {
   const { users, isLoading, error, refetch } = useUsers();
