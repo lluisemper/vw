@@ -1,17 +1,15 @@
-import useSWR from 'swr';
-import type { User } from '@/types';
-import { fetchJSON } from '@/services/api';
+import useSWR from "swr";
+import type { User } from "@/types";
+import { userService } from "@/features/users/services/userService";
+
+const fetcher = () => userService.getUsers();
 
 export function useUsers() {
-  const { data, error, isLoading, mutate } = useSWR<User[]>(
-    'users',
-    () => fetchJSON<User[]>('/users'),
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: true,
-      dedupingInterval: 5000,
-    }
-  );
+  const { data, error, isLoading, mutate } = useSWR<User[]>("users", fetcher, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: true,
+    dedupingInterval: 5000,
+  });
 
   return {
     users: data ?? [],
