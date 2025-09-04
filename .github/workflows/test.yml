@@ -24,10 +24,3 @@ jobs:
 
       - name: Run tests
         run: npm run test -- --ci --reporter=dot
-
-      - name: Upload coverage
-        if: success()
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage-report
-          path: coverage/
