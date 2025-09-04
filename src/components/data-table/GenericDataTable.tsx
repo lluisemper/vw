@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -8,18 +8,18 @@ import {
   flexRender,
   type ColumnDef,
   type SortingState,
-} from '@tanstack/react-table';
-import { 
-  Search, 
+} from "@tanstack/react-table";
+import {
+  Search,
   Users,
-  ArrowUp, 
-  ArrowDown, 
+  ArrowUp,
+  ArrowDown,
   ArrowUpDown,
   ChevronsLeft,
   ChevronLeft,
   ChevronRight,
   ChevronsRight,
-} from 'lucide-react';
+} from "lucide-react";
 
 interface GenericDataTableProps<TData> {
   data: TData[];
@@ -39,26 +39,27 @@ interface GenericDataTableProps<TData> {
 // - Table logic (sorting, filtering, pagination) via react-table
 // - UI for search input and data count
 // - Rendering empty state and optional expanded rows
-// 
+//
 // If needed, we could further abstract concerns:
 // 1. Search / Data Count → separate toolbar component
 // 2. Expanded row rendering → provide a dedicated RowExpander component
+// 3. Pagination → provide a dedicated Pagination component
 
 export function GenericDataTable<TData>({
   data,
   columns,
-  searchPlaceholder = 'Search...',
+  searchPlaceholder = "Search...",
   showSearch = true,
   showPagination = true,
   showDataCount = true,
-  dataCountLabel = 'items',
+  dataCountLabel = "items",
   initialPageSize = 10,
-  className = '',
+  className = "",
   emptyStateComponent: EmptyStateComponent,
   renderExpandedRow,
 }: GenericDataTableProps<TData>) {
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [globalFilter, setGlobalFilter] = useState('');
+  const [globalFilter, setGlobalFilter] = useState("");
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
 
   const table = useReactTable({
@@ -82,7 +83,7 @@ export function GenericDataTable<TData>({
   });
 
   const toggleRowExpansion = (rowId: string) => {
-    setExpandedRows(prev => {
+    setExpandedRows((prev) => {
       const newExpanded = new Set(prev);
       if (newExpanded.has(rowId)) {
         newExpanded.delete(rowId);
@@ -106,7 +107,7 @@ export function GenericDataTable<TData>({
                 </div>
                 <input
                   type="text"
-                  value={globalFilter ?? ''}
+                  value={globalFilter ?? ""}
                   onChange={(e) => setGlobalFilter(e.target.value)}
                   placeholder={searchPlaceholder}
                   className="block w-full rounded-lg border-0 py-2.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 transition-all duration-200"
@@ -116,12 +117,13 @@ export function GenericDataTable<TData>({
           ) : (
             <div className="flex-1"></div>
           )}
-          
+
           {showDataCount && data.length > 0 && (
             <div className="flex items-center text-sm text-gray-700 bg-gray-50 px-3 py-2 rounded-lg">
               <Users className="h-4 w-4 mr-1.5 text-gray-500" />
               <span className="hidden sm:inline">
-                {table.getFilteredRowModel().rows.length} of {data.length} {dataCountLabel}
+                {table.getFilteredRowModel().rows.length} of {data.length}{" "}
+                {dataCountLabel}
               </span>
               <span className="sm:hidden">
                 {table.getFilteredRowModel().rows.length}/{data.length}
@@ -141,18 +143,23 @@ export function GenericDataTable<TData>({
                   {headerGroup.headers.map((header) => (
                     <th
                       key={header.id}
-                      className={`px-3 sm:px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none transition-colors duration-200 group ${header.column.columnDef.meta?.responsiveClass || ''}`}
+                      className={`px-3 sm:px-6 py-4 text-left text-xs font-semibold text-gray-900 uppercase tracking-wider cursor-pointer hover:bg-gray-100 select-none transition-colors duration-200 group ${
+                        header.column.columnDef.meta?.responsiveClass || ""
+                      }`}
                       onClick={header.column.getToggleSortingHandler()}
                       style={{ width: header.getSize() }}
                     >
                       <div className="flex items-center justify-between">
                         <span className="group-hover:text-gray-700 transition-colors">
-                          {flexRender(header.column.columnDef.header, header.getContext())}
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                         </span>
                         <span className="ml-2 flex-none rounded text-gray-400 group-hover:text-gray-500">
-                          {header.column.getIsSorted() === 'desc' ? (
+                          {header.column.getIsSorted() === "desc" ? (
                             <ArrowDown className="h-4 w-4" />
-                          ) : header.column.getIsSorted() === 'asc' ? (
+                          ) : header.column.getIsSorted() === "asc" ? (
                             <ArrowUp className="h-4 w-4" />
                           ) : (
                             <ArrowUpDown className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -167,8 +174,13 @@ export function GenericDataTable<TData>({
             <tbody className="bg-white divide-y divide-gray-200">
               {table.getRowModel().rows.length === 0 ? (
                 <tr>
-                  <td colSpan={columns.length} className="px-6 py-20 text-center">
-                    {EmptyStateComponent ? <EmptyStateComponent /> : (
+                  <td
+                    colSpan={columns.length}
+                    className="px-6 py-20 text-center"
+                  >
+                    {EmptyStateComponent ? (
+                      <EmptyStateComponent />
+                    ) : (
                       <div className="text-gray-500">No data found</div>
                     )}
                   </td>
@@ -176,17 +188,21 @@ export function GenericDataTable<TData>({
               ) : (
                 table.getRowModel().rows.map((row) => {
                   const isExpanded = expandedRows.has(row.id);
-                  
+
                   return (
                     <React.Fragment key={row.id}>
-                      <tr 
-                        className="hover:bg-gray-50/50 transition-colors duration-150 group"
-                      >
+                      <tr className="hover:bg-gray-50/50 transition-colors duration-150 group">
                         {row.getVisibleCells().map((cell) => (
-                          <td key={cell.id} className={`px-3 sm:px-6 py-4 whitespace-nowrap ${cell.column.columnDef.meta?.responsiveClass || ''}`}>
+                          <td
+                            key={cell.id}
+                            className={`px-3 sm:px-6 py-4 whitespace-nowrap ${
+                              cell.column.columnDef.meta?.responsiveClass || ""
+                            }`}
+                          >
                             {flexRender(cell.column.columnDef.cell, {
                               ...cell.getContext(),
-                              toggleRowExpansion: () => toggleRowExpansion(row.id),
+                              toggleRowExpansion: () =>
+                                toggleRowExpansion(row.id),
                               isExpanded,
                             })}
                           </td>
@@ -249,7 +265,12 @@ export function GenericDataTable<TData>({
 
           <div className="flex items-center justify-center sm:justify-end gap-2 sm:gap-4">
             <div className="flex items-center gap-2">
-              <label htmlFor="page-size" className="text-xs sm:text-sm font-medium text-gray-700">Show</label>
+              <label
+                htmlFor="page-size"
+                className="text-xs sm:text-sm font-medium text-gray-700"
+              >
+                Show
+              </label>
               <select
                 id="page-size"
                 value={table.getState().pagination.pageSize}
@@ -265,7 +286,8 @@ export function GenericDataTable<TData>({
             </div>
             <div className="text-xs sm:text-sm text-gray-700">
               <span className="font-medium">
-                Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+                Page {table.getState().pagination.pageIndex + 1} of{" "}
+                {table.getPageCount()}
               </span>
             </div>
           </div>
