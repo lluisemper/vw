@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:watch": "vitest --watch",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "prod": "json-server db.json --host 0.0.0.0 --port $PORT"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.12",
