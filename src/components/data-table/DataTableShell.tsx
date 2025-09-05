@@ -10,6 +10,7 @@ interface DataTableShellProps {
   onRetry?: () => void;
   showMobileInfo?: boolean;
   mobileInfoText?: string;
+  actions?: React.ReactNode;
   children: React.ReactNode;
 }
 
@@ -21,6 +22,7 @@ export const DataTableShell = ({
   onRetry,
   showMobileInfo = true,
   mobileInfoText = "Tap the arrow next to a name to view additional details",
+  actions,
   children,
 }: DataTableShellProps) => {
   return (
@@ -36,6 +38,9 @@ export const DataTableShell = ({
               <p className="mt-2 text-sm text-gray-600">{subtitle}</p>
             )}
           </div>
+          {actions && (
+            <div className="mt-4 flex md:mt-0 md:ml-4">{actions}</div>
+          )}
         </div>
       </div>
 

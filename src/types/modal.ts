@@ -1,4 +1,4 @@
-export type ModalType = "userDetails" | "edit" | "delete";
+export type ModalType = "userDetails" | "createUser" | "edit" | "delete";
 
 export interface ModalState {
   isOpen: boolean;

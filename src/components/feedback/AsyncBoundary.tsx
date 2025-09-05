@@ -1,4 +1,4 @@
-import { LoadingSpinner, ErrorMessage } from '@/components/ui';
+import { LoadingSpinner, ErrorMessage } from "@/components/ui";
 
 interface AsyncBoundaryProps {
   isLoading: boolean;
