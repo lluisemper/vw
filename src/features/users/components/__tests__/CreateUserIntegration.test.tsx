@@ -81,6 +81,7 @@ vi.mock("lucide-react", () => ({
       ⟲
     </span>
   ),
+  Edit2: () => <span data-testid="edit2-icon">✏️</span>,
 }));
 
 // Mock fetch to simulate API calls
@@ -278,12 +279,20 @@ describe("Create User Integration", () => {
         expect.objectContaining({
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: "New User",
-            email: "new.user@example.com",
-          }),
+          body: expect.stringContaining('"name":"New User"'),
         })
       );
+      
+      // Parse the body to verify timestamp fields are included
+      const callArgs = mockFetch.mock.calls[0];
+      const body = JSON.parse(callArgs[1].body);
+      expect(body).toMatchObject({
+        name: "New User",
+        email: "new.user@example.com",
+        createdAt: expect.any(String),
+        updatedAt: expect.any(String),
+      });
+      expect(body.createdAt).toBe(body.updatedAt); // Should be the same timestamp
     });
 
     // Verify success toast

@@ -16,6 +16,14 @@ export const createUserSchema = z.object({
 
 export type CreateUserInput = z.infer<typeof createUserSchema>;
 
-export const updateUserSchema = createUserSchema.partial();
+// For editing users, we want full validation (not partial)
+export const updateUserSchema = createUserSchema.extend({
+  id: z.number().positive("User ID is required"),
+  createdAt: z.string(),
+});
 
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;
+
+// For partial updates (if needed elsewhere)
+export const partialUpdateUserSchema = createUserSchema.partial();
+export type PartialUpdateUserInput = z.infer<typeof partialUpdateUserSchema>;

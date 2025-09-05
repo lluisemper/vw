@@ -11,6 +11,10 @@ const CreateUserModal = React.lazy(
   () => import("@/features/users/components/CreateUserModal")
 );
 
+const EditUserModal = React.lazy(
+  () => import("@/features/users/components/EditUserModal")
+);
+
 export function ModalShell() {
   const { modalData, modalType } = useModalStore();
 
@@ -30,6 +34,9 @@ export function ModalShell() {
       {modalType === "createUser" && <CreateUserModal />}
       {modalType === "userDetails" && (
         <UserDetailsModal user={modalData as User} />
+      )}
+      {modalType === "edit" && (
+        <EditUserModal user={modalData as User} />
       )}
     </Suspense>
   );
