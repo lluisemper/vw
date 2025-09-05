@@ -14,12 +14,6 @@
     "moduleDetection": "force",
     "noEmit": true,
 
-    /* Path mapping */
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    },
-
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
