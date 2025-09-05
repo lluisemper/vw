@@ -130,29 +130,41 @@ describe("userSchema", () => {
   });
 
   describe("updateUserSchema", () => {
-    it("should validate partial user input", () => {
+    it("should require all fields for user update", () => {
       const input = {
+        id: 1,
         name: "Jane Smith",
+        email: "jane@example.com",
+        createdAt: "2024-01-01T00:00:00Z",
       };
 
       const result = updateUserSchema.safeParse(input);
       expect(result.success).toBe(true);
       if (result.success) {
         expect(result.data.name).toBe("Jane Smith");
-        expect(result.data.email).toBeUndefined();
+        expect(result.data.id).toBe(1);
+        expect(result.data.email).toBe("jane@example.com");
+        expect(result.data.createdAt).toBe("2024-01-01T00:00:00Z");
       }
     });
 
-    it("should validate empty object", () => {
-      const input = {};
+    it("should fail validation when missing required fields", () => {
+      const input = {
+        id: 1,
+        name: "Jane Smith",
+        // missing email and createdAt
+      };
 
       const result = updateUserSchema.safeParse(input);
-      expect(result.success).toBe(true);
+      expect(result.success).toBe(false);
     });
 
-    it("should still validate email format when provided", () => {
+    it("should validate email format in update schema", () => {
       const input = {
+        id: 1,
+        name: "Jane Smith",
         email: "invalid-email",
+        createdAt: "2024-01-01T00:00:00Z",
       };
 
       const result = updateUserSchema.safeParse(input);

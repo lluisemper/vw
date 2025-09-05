@@ -9,6 +9,7 @@ import {
   RotateCcw,
   Users,
   Eye,
+  Edit2,
 } from "lucide-react";
 import type { User } from "@/types";
 import { formatDate } from "@/utils/dateUtils";
@@ -137,15 +138,22 @@ export const UserTable = ({
       {
         id: "actions",
         header: "Actions",
-        size: 100,
+        size: 120,
         cell: ({ row }) => (
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center space-x-1">
             <button
               onClick={() => openModal("userDetails", row.original)}
               className="inline-flex items-center justify-center w-8 h-8 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
               aria-label={`View details for ${row.original.name}`}
             >
               <Eye className="h-4 w-4" />
+            </button>
+            <button
+              onClick={() => openModal("edit", row.original)}
+              className="inline-flex items-center justify-center w-8 h-8 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+              aria-label={`Edit ${row.original.name}`}
+            >
+              <Edit2 className="h-4 w-4" />
             </button>
           </div>
         ),

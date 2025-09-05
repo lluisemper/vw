@@ -66,6 +66,7 @@ vi.mock("lucide-react", () => ({
   X: () => <span>✕</span>,
   AlertTriangle: () => <span>⚠️</span>,
   UserPlus: () => <span data-testid="user-plus-icon">👤+</span>,
+  Edit2: () => <span data-testid="edit2-icon">✏️</span>,
 }));
 
 describe("User Modal Integration", () => {
