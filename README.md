@@ -19,4 +19,8 @@ The purpose of this project is to demonstrate React frontend skills, state manag
 
 For testing styles I would prefer to use e2e testing or visual regression testing. That way representing a more real scenario, you want to see on the real world how it looks. Checking for classes on unit testing I do not think it is meaningful in most cases.
 
+#### Optimization
+
+Lazy load of the modal, only loaded when needed.
+
 <!-- TODO: project’s deployment, configuration and execution steps. -->

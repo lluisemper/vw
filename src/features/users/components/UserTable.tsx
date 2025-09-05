@@ -8,10 +8,12 @@ import {
   Clock,
   RotateCcw,
   Users,
+  Eye,
 } from "lucide-react";
 import type { User } from "@/types";
 import { formatDate } from "@/utils/dateUtils";
 import { GenericDataTable } from "@/components/data-table/GenericDataTable";
+import { useModalStore } from "@/stores/modalStore";
 
 interface UserTableProps {
   users: User[];
@@ -24,6 +26,8 @@ interface CellContext {
 }
 
 export const UserTable = ({ users, className }: UserTableProps) => {
+  const { openModal } = useModalStore();
+
   const columns = useMemo<ColumnDef<User>[]>(
     () => [
       {
@@ -125,8 +129,30 @@ export const UserTable = ({ users, className }: UserTableProps) => {
           responsiveClass: "hidden md:table-cell",
         },
       },
+      {
+        id: "actions",
+        header: "Actions",
+        size: 100,
+        cell: ({ row }) => (
+          <div className="flex items-center justify-center">
+            <button
+              onClick={() => openModal("userDetails", row.original)}
+              className="inline-flex items-center justify-center w-8 h-8 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+              aria-label={`View details for ${row.original.name}`}
+            >
+              <Eye className="h-4 w-4" />
+            </button>
+          </div>
+        ),
+        enableSorting: false,
+        meta: {
+          responsiveClass: "", // Always visible
+        },
+      },
     ],
-    []
+    // This is not actually needed.
+    // Currently it does not change, however if the behavior were to change in the future it will provide some safeguards.
+    [openModal]
   );
 
   const renderExpandedRow = (user: User) => (

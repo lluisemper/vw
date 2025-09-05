@@ -1,3 +1,5 @@
+export * from "./modal";
+
 export interface User {
   id: number;
   name: string;
