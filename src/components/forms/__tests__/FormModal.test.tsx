@@ -13,7 +13,7 @@ interface MockModalProps {
   children: React.ReactNode;
 }
 
-vi.mock("@/components/ui/Modal", () => ({
+vi.mock("@/components/ui/modal", () => ({
   Modal: ({ isOpen, onRequestClose, title, children }: MockModalProps) => {
     if (!isOpen) return null;
     return (

@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal } from "@/components/ui/modal";
+import { Modal } from "@/components/ui";
 import { useModalStore } from "@/stores/modalStore";
 import type { ModalType } from "@/types";
 
