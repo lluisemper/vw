@@ -4,7 +4,7 @@ import { useUsers } from "@/features/users/hooks/useUsers";
 import { DataTableShell } from "@/components/data-table/DataTableShell";
 import { UserTable } from "@/features/users/components/UserTable";
 import { useModalStore } from "@/stores/modalStore";
-import { ModalShell } from "@/components/ui/modal/ModalShell";
+import { ModalShell } from "@/components/ui/modal";
 import Modal from "react-modal";
 
 Modal.setAppElement("#root");
@@ -41,9 +41,7 @@ function App() {
       >
         <UserTable users={users} searchBarActions={addUserButton} />
       </DataTableShell>
-
       <ModalShell />
-
       <Toaster
         position="top-right"
         toastOptions={{
