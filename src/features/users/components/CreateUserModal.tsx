@@ -23,7 +23,7 @@ function CreateUserModal() {
 
   const validateForm = (): boolean => {
     const result = createUserSchema.safeParse(formData);
-    
+
     if (!result.success) {
       const fieldErrors: FormErrors = {};
       result.error.issues.forEach((issue) => {
@@ -33,20 +33,20 @@ function CreateUserModal() {
       setErrors(fieldErrors);
       return false;
     }
-    
+
     setErrors({});
     return true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     const user = await createUser(formData);
-    
+
     if (user) {
       // Reset form and close modal on success
       setFormData({ name: "", email: "" });
@@ -55,28 +55,33 @@ function CreateUserModal() {
     }
   };
 
-  const validateField = (field: keyof CreateUserInput, value: string): string | undefined => {
+  const validateField = (
+    field: keyof CreateUserInput,
+    value: string
+  ): string | undefined => {
     const tempData = { ...formData, [field]: value };
     const result = createUserSchema.safeParse(tempData);
-    
+
     if (!result.success) {
-      const fieldError = result.error.issues.find(issue => issue.path[0] === field);
+      const fieldError = result.error.issues.find(
+        (issue) => issue.path[0] === field
+      );
       return fieldError?.message;
     }
-    
+
     return undefined;
   };
 
   const handleInputChange = (field: keyof CreateUserInput, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    
+    setFormData((prev) => ({ ...prev, [field]: value }));
+
     // Clear field error immediately when field becomes empty
     if (value === "") {
-      setErrors(prev => ({ ...prev, [field]: undefined }));
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
     } else {
       // Validate field in real-time and show error if invalid
       const fieldError = validateField(field, value);
-      setErrors(prev => ({ ...prev, [field]: fieldError }));
+      setErrors((prev) => ({ ...prev, [field]: fieldError }));
     }
   };
 

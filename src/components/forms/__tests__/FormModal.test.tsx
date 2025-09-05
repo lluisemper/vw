@@ -1,11 +1,11 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { FormModal } from '../FormModal';
-import { useModalStore } from '@/stores/modalStore';
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { FormModal } from "../FormModal";
+import { useModalStore } from "@/stores/modalStore";
 
 // Mock dependencies
-vi.mock('@/stores/modalStore');
+vi.mock("@/stores/modalStore");
 interface MockModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
@@ -13,7 +13,7 @@ interface MockModalProps {
   children: React.ReactNode;
 }
 
-vi.mock('@/components/ui/Modal', () => ({
+vi.mock("@/components/ui/Modal", () => ({
   Modal: ({ isOpen, onRequestClose, title, children }: MockModalProps) => {
     if (!isOpen) return null;
     return (
@@ -28,7 +28,7 @@ vi.mock('@/components/ui/Modal', () => ({
   },
 }));
 
-describe('FormModal', () => {
+describe("FormModal", () => {
   const mockModalStore = {
     isOpen: false,
     modalType: null,
@@ -40,11 +40,11 @@ describe('FormModal', () => {
     vi.mocked(useModalStore).mockReturnValue(mockModalStore);
   });
 
-  it('should render modal when open and modal type matches', () => {
+  it("should render modal when open and modal type matches", () => {
     vi.mocked(useModalStore).mockReturnValue({
       ...mockModalStore,
       isOpen: true,
-      modalType: 'createUser',
+      modalType: "createUser",
     });
 
     render(
@@ -53,16 +53,16 @@ describe('FormModal', () => {
       </FormModal>
     );
 
-    expect(screen.getByTestId('modal')).toBeInTheDocument();
-    expect(screen.getByText('Create User')).toBeInTheDocument();
-    expect(screen.getByText('Modal content')).toBeInTheDocument();
+    expect(screen.getByTestId("modal")).toBeInTheDocument();
+    expect(screen.getByText("Create User")).toBeInTheDocument();
+    expect(screen.getByText("Modal content")).toBeInTheDocument();
   });
 
-  it('should not render when modal is closed', () => {
+  it("should not render when modal is closed", () => {
     vi.mocked(useModalStore).mockReturnValue({
       ...mockModalStore,
       isOpen: false,
-      modalType: 'createUser',
+      modalType: "createUser",
     });
 
     render(
@@ -71,14 +71,14 @@ describe('FormModal', () => {
       </FormModal>
     );
 
-    expect(screen.queryByTestId('modal')).not.toBeInTheDocument();
+    expect(screen.queryByTestId("modal")).not.toBeInTheDocument();
   });
 
-  it('should not render when modal type does not match', () => {
+  it("should not render when modal type does not match", () => {
     vi.mocked(useModalStore).mockReturnValue({
       ...mockModalStore,
       isOpen: true,
-      modalType: 'otherModal',
+      modalType: "otherModal",
     });
 
     render(
@@ -87,17 +87,17 @@ describe('FormModal', () => {
       </FormModal>
     );
 
-    expect(screen.queryByTestId('modal')).not.toBeInTheDocument();
+    expect(screen.queryByTestId("modal")).not.toBeInTheDocument();
   });
 
-  it('should call closeModal when close button is clicked', async () => {
+  it("should call closeModal when close button is clicked", async () => {
     const user = userEvent.setup();
     const mockCloseModal = vi.fn();
 
     vi.mocked(useModalStore).mockReturnValue({
       ...mockModalStore,
       isOpen: true,
-      modalType: 'createUser',
+      modalType: "createUser",
       closeModal: mockCloseModal,
     });
 
@@ -107,20 +107,20 @@ describe('FormModal', () => {
       </FormModal>
     );
 
-    const closeButton = screen.getByTestId('close-button');
+    const closeButton = screen.getByTestId("close-button");
     await user.click(closeButton);
 
     expect(mockCloseModal).toHaveBeenCalledOnce();
   });
 
-  it('should not close modal when isSubmitting is true', async () => {
+  it("should not close modal when isSubmitting is true", async () => {
     const user = userEvent.setup();
     const mockCloseModal = vi.fn();
 
     vi.mocked(useModalStore).mockReturnValue({
       ...mockModalStore,
       isOpen: true,
-      modalType: 'createUser',
+      modalType: "createUser",
       closeModal: mockCloseModal,
     });
 
@@ -130,17 +130,17 @@ describe('FormModal', () => {
       </FormModal>
     );
 
-    const closeButton = screen.getByTestId('close-button');
+    const closeButton = screen.getByTestId("close-button");
     await user.click(closeButton);
 
     expect(mockCloseModal).not.toHaveBeenCalled();
   });
 
-  it('should render with different sizes', () => {
+  it("should render with different sizes", () => {
     vi.mocked(useModalStore).mockReturnValue({
       ...mockModalStore,
       isOpen: true,
-      modalType: 'createUser',
+      modalType: "createUser",
     });
 
     const { rerender } = render(
@@ -149,7 +149,7 @@ describe('FormModal', () => {
       </FormModal>
     );
 
-    expect(screen.getByTestId('modal')).toBeInTheDocument();
+    expect(screen.getByTestId("modal")).toBeInTheDocument();
 
     rerender(
       <FormModal modalType="createUser" title="Create User" size="lg">
@@ -157,14 +157,14 @@ describe('FormModal', () => {
       </FormModal>
     );
 
-    expect(screen.getByTestId('modal')).toBeInTheDocument();
+    expect(screen.getByTestId("modal")).toBeInTheDocument();
   });
 
-  it('should use default size when not specified', () => {
+  it("should use default size when not specified", () => {
     vi.mocked(useModalStore).mockReturnValue({
       ...mockModalStore,
       isOpen: true,
-      modalType: 'createUser',
+      modalType: "createUser",
     });
 
     render(
@@ -173,6 +173,6 @@ describe('FormModal', () => {
       </FormModal>
     );
 
-    expect(screen.getByTestId('modal')).toBeInTheDocument();
+    expect(screen.getByTestId("modal")).toBeInTheDocument();
   });
 });

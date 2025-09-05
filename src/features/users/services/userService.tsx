@@ -5,5 +5,6 @@ import type { CreateUserInput } from "@/schemas/userSchema";
 
 export const userService = {
   getUsers: () => fetchJSON<User[]>("/users"),
-  createUser: (userData: CreateUserInput) => postJSON<CreateUserInput, User>("/users", userData),
+  createUser: (userData: CreateUserInput) =>
+    postJSON<CreateUserInput, User>("/users", userData),
 };

@@ -26,7 +26,11 @@ interface CellContext {
   isExpanded?: boolean;
 }
 
-export const UserTable = ({ users, className, searchBarActions }: UserTableProps) => {
+export const UserTable = ({
+  users,
+  className,
+  searchBarActions,
+}: UserTableProps) => {
   const { openModal } = useModalStore();
 
   const columns = useMemo<ColumnDef<User>[]>(
