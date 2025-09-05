@@ -18,6 +18,7 @@ import { useModalStore } from "@/stores/modalStore";
 interface UserTableProps {
   users: User[];
   className?: string;
+  searchBarActions?: React.ReactNode;
 }
 
 interface CellContext {
@@ -25,7 +26,11 @@ interface CellContext {
   isExpanded?: boolean;
 }
 
-export const UserTable = ({ users, className }: UserTableProps) => {
+export const UserTable = ({
+  users,
+  className,
+  searchBarActions,
+}: UserTableProps) => {
   const { openModal } = useModalStore();
 
   const columns = useMemo<ColumnDef<User>[]>(
@@ -200,6 +205,7 @@ export const UserTable = ({ users, className }: UserTableProps) => {
       className={className}
       emptyStateComponent={EmptyState}
       renderExpandedRow={renderExpandedRow}
+      searchBarActions={searchBarActions}
     />
   );
 };

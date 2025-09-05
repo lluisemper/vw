@@ -1,5 +1,10 @@
-
-export const LoadingSkeleton = ({ className = '', rows = 5 }: { className?: string; rows?: number }) => {
+export const LoadingSkeleton = ({
+  className = "",
+  rows = 5,
+}: {
+  className?: string;
+  rows?: number;
+}) => {
   return (
     <div className={`animate-pulse space-y-4 ${className}`}>
       {Array.from({ length: rows }).map((_, i) => (

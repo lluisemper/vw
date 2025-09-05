@@ -1,2 +1,2 @@
-export { UserTable } from './UserTable';
-export { default as UserTableLoading } from './UserTableLoading';
+export { UserTable } from "./UserTable";
+export { default as UserTableLoading } from "./UserTableLoading";
