@@ -24,3 +24,8 @@ For testing styles I would prefer to use e2e testing or visual regression testin
 Lazy load of the modal, only loaded when needed.
 
 <!-- TODO: project’s deployment, configuration and execution steps. -->
+
+#### Modal
+
+- Accessible
+- Wider lock body scroll support, react-modal was throwing an error that could not do it in

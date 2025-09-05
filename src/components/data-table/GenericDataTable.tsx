@@ -33,6 +33,7 @@ interface GenericDataTableProps<TData> {
   className?: string;
   emptyStateComponent?: React.ComponentType;
   renderExpandedRow?: (item: TData) => React.ReactNode;
+  searchBarActions?: React.ReactNode;
 }
 
 export function GenericDataTable<TData>({
@@ -47,6 +48,7 @@ export function GenericDataTable<TData>({
   className = "",
   emptyStateComponent,
   renderExpandedRow,
+  searchBarActions,
 }: GenericDataTableProps<TData>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
@@ -93,30 +95,30 @@ export function GenericDataTable<TData>({
   if (data.length === 0 || filteredRowCount === 0) {
     return (
       <div className={className}>
-        {/* Search and Data Count */}
-        {(showSearch || showDataCount) && (
-          <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            {showSearch ? (
-              <SearchBar
-                value={globalFilter ?? ""}
-                onChange={setGlobalFilter}
-                placeholder={searchPlaceholder}
-              />
-            ) : (
-              <div className="flex-1"></div>
+        {/* Search Bar with Actions */}
+        {showSearch && (
+          <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <SearchBar
+              value={globalFilter ?? ""}
+              onChange={setGlobalFilter}
+              placeholder={searchPlaceholder}
+            />
+            {searchBarActions && (
+              <div className="flex-shrink-0">{searchBarActions}</div>
             )}
+          </div>
+        )}
 
-            {showDataCount && data.length > 0 && (
-              <div className="flex items-center text-sm text-gray-700 bg-gray-50 px-3 py-2 rounded-lg">
-                <Users className="h-4 w-4 mr-1.5 text-gray-500" />
-                <span className="hidden sm:inline">
-                  {filteredRowCount} of {data.length} {dataCountLabel}
-                </span>
-                <span className="sm:hidden">
-                  {filteredRowCount}/{data.length}
-                </span>
-              </div>
-            )}
+        {/* Data Count */}
+        {showDataCount && data.length > 0 && (
+          <div className="flex items-center text-sm text-gray-700 bg-gray-50 px-3 py-2 rounded-lg w-fit">
+            <Users className="h-4 w-4 mr-1.5 text-gray-500" />
+            <span className="hidden sm:inline">
+              {filteredRowCount} of {data.length} {dataCountLabel}
+            </span>
+            <span className="sm:hidden">
+              {filteredRowCount}/{data.length}
+            </span>
           </div>
         )}
 
@@ -131,30 +133,30 @@ export function GenericDataTable<TData>({
 
   return (
     <div className={className}>
-      {/* Search and Data Count */}
-      {(showSearch || showDataCount) && (
-        <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          {showSearch ? (
-            <SearchBar
-              value={globalFilter ?? ""}
-              onChange={setGlobalFilter}
-              placeholder={searchPlaceholder}
-            />
-          ) : (
-            <div className="flex-1"></div>
+      {/* Search Bar with Actions */}
+      {showSearch && (
+        <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <SearchBar
+            value={globalFilter ?? ""}
+            onChange={setGlobalFilter}
+            placeholder={searchPlaceholder}
+          />
+          {searchBarActions && (
+            <div className="flex-shrink-0">{searchBarActions}</div>
           )}
+        </div>
+      )}
 
-          {showDataCount && (
-            <div className="flex items-center text-sm text-gray-700 bg-gray-50 px-3 py-2 rounded-lg">
-              <Users className="h-4 w-4 mr-1.5 text-gray-500" />
-              <span className="hidden sm:inline">
-                {filteredRowCount} of {data.length} {dataCountLabel}
-              </span>
-              <span className="sm:hidden">
-                {filteredRowCount}/{data.length}
-              </span>
-            </div>
-          )}
+      {/* Data Count */}
+      {showDataCount && (
+        <div className="flex items-center text-sm text-gray-700 bg-gray-50 px-3 py-2 rounded-lg w-fit">
+          <Users className="h-4 w-4 mr-1.5 text-gray-500" />
+          <span className="hidden sm:inline">
+            {filteredRowCount} of {data.length} {dataCountLabel}
+          </span>
+          <span className="sm:hidden">
+            {filteredRowCount}/{data.length}
+          </span>
         </div>
       )}
 
