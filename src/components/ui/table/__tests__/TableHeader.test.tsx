@@ -186,8 +186,9 @@ describe("TableHeader", () => {
         />
       );
 
+      const header = screen.getByRole("columnheader");
       const button = screen.getByRole("button");
-      expect(button).toHaveAttribute("aria-sort", "none");
+      expect(header).toHaveAttribute("aria-sort", "none");
       expect(button).toHaveAttribute(
         "aria-label",
         "Test Column, not sorted. Click to sort ascending."
@@ -208,8 +209,9 @@ describe("TableHeader", () => {
         />
       );
 
+      const header = screen.getByRole("columnheader");
       const button = screen.getByRole("button");
-      expect(button).toHaveAttribute("aria-sort", "ascending");
+      expect(header).toHaveAttribute("aria-sort", "ascending");
       expect(button).toHaveAttribute(
         "aria-label",
         "Test Column, sorted ascending. Click to sort descending."
@@ -230,8 +232,9 @@ describe("TableHeader", () => {
         />
       );
 
+      const header = screen.getByRole("columnheader");
       const button = screen.getByRole("button");
-      expect(button).toHaveAttribute("aria-sort", "descending");
+      expect(header).toHaveAttribute("aria-sort", "descending");
       expect(button).toHaveAttribute(
         "aria-label",
         "Test Column, sorted descending. Click to sort ascending."
