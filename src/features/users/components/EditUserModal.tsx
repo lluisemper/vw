@@ -120,7 +120,7 @@ function EditUserModal({ user }: EditUserModalProps) {
 
   return (
     <FormModal
-      modalType="edit"
+      modalType="editUser"
       title="Edit User"
       size="md"
       isSubmitting={isLoading}

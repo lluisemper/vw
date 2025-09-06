@@ -10,11 +10,13 @@ import {
   Users,
   Eye,
   Edit2,
+  Trash2,
 } from "lucide-react";
 import type { User } from "@/types";
 import { formatDate } from "@/utils/dateUtils";
 import { GenericDataTable } from "@/components/data-table/GenericDataTable";
 import { useModalStore } from "@/stores/modalStore";
+import { IconButton } from "@/components/ui";
 
 interface UserTableProps {
   users: User[];
@@ -138,23 +140,36 @@ export const UserTable = ({
       {
         id: "actions",
         header: "Actions",
-        size: 120,
+        size: 150,
         cell: ({ row }) => (
           <div className="flex items-center justify-center space-x-1">
-            <button
+            <IconButton
               onClick={() => openModal("userDetails", row.original)}
-              className="inline-flex items-center justify-center w-8 h-8 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+              variant="ghost"
+              size="sm"
+              className="text-gray-400 hover:text-blue-600 hover:bg-blue-50"
               aria-label={`View details for ${row.original.name}`}
             >
               <Eye className="h-4 w-4" />
-            </button>
-            <button
-              onClick={() => openModal("edit", row.original)}
-              className="inline-flex items-center justify-center w-8 h-8 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+            </IconButton>
+            <IconButton
+              onClick={() => openModal("editUser", row.original)}
+              variant="ghost"
+              size="sm"
+              className="text-gray-400 hover:text-green-600 hover:bg-green-50"
               aria-label={`Edit ${row.original.name}`}
             >
               <Edit2 className="h-4 w-4" />
-            </button>
+            </IconButton>
+            <IconButton
+              onClick={() => openModal("deleteUser", row.original)}
+              variant="ghost"
+              size="sm"
+              className="text-gray-400 hover:text-red-600 hover:bg-red-50"
+              aria-label={`Delete ${row.original.name}`}
+            >
+              <Trash2 className="h-4 w-4" />
+            </IconButton>
           </div>
         ),
         enableSorting: false,
