@@ -242,7 +242,13 @@ describe("Create User Integration", () => {
       updatedAt: "2024-01-25T10:00:00Z",
     };
 
-    // Mock successful API response
+    // Mock GET request to fetch existing users (returns the existing mockUsers)
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockUsers,
+    });
+
+    // Mock successful POST response to create user
     mockFetch.mockResolvedValueOnce({
       ok: true,
       json: async () => newUser,
@@ -273,9 +279,13 @@ describe("Create User Integration", () => {
     const createButton = screen.getByRole("button", { name: /create user/i });
     await user.click(createButton);
 
-    // Verify API call was made
+    // Verify API calls were made
     await waitFor(() => {
-      expect(mockFetch).toHaveBeenCalledWith(
+      // First call should be GET to fetch existing users
+      expect(mockFetch).toHaveBeenNthCalledWith(1, "http://localhost:3001/users");
+      
+      // Second call should be POST to create new user
+      expect(mockFetch).toHaveBeenNthCalledWith(2,
         "http://localhost:3001/users",
         expect.objectContaining({
           method: "POST",
@@ -284,10 +294,11 @@ describe("Create User Integration", () => {
         })
       );
       
-      // Parse the body to verify timestamp fields are included
-      const callArgs = mockFetch.mock.calls[0];
-      const body = JSON.parse(callArgs[1].body);
+      // Parse the POST body to verify timestamp fields and id are included
+      const postCallArgs = mockFetch.mock.calls[1];
+      const body = JSON.parse(postCallArgs[1].body);
       expect(body).toMatchObject({
+        id: 3, // Should be mockUsers.length + 1
         name: "New User",
         email: "new.user@example.com",
         createdAt: expect.any(String),
