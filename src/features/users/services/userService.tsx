@@ -1,5 +1,5 @@
 // services/userService.ts
-import { fetchJSON, postJSON, putJSON } from "@/services/api";
+import { fetchJSON, postJSON, putJSON, deleteJSON } from "@/services/api";
 import type { User } from "@/types";
 import type { CreateUserInput, UpdateUserInput } from "@/schemas/userSchema";
 
@@ -20,4 +20,5 @@ export const userService = {
       createdAt: userData.createdAt,
       updatedAt: new Date().toISOString(),
     }),
+  deleteUser: (userId: number) => deleteJSON(`/users/${userId}`),
 };

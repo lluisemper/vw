@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import { LoadingSpinner } from "./LoadingSpinner";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline" | "ghost";
+  variant?: "primary" | "secondary" | "outline" | "ghost" | "danger";
   size?: "sm" | "md" | "lg";
   loading?: boolean;
   className?: string;
@@ -30,6 +30,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       outline:
         "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-blue-500",
       ghost: "text-gray-700 hover:bg-gray-100 focus:ring-gray-500",
+      danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500",
     };
 
     const sizeClasses = {
@@ -48,7 +49,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {loading && (
-          <LoadingSpinner size="sm" variant="white" className="-ml-1 mr-2" />
+          <LoadingSpinner 
+            size="sm" 
+            variant={variant === "outline" || variant === "ghost" ? "primary" : "white"} 
+            className="-ml-1 mr-2" 
+          />
         )}
         {children}
       </button>

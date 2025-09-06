@@ -16,7 +16,13 @@ describe("modalStore", () => {
 
   it("should open modal with type and data", () => {
     const { openModal } = useModalStore.getState();
-    const testData = { id: 1, name: "Test User" };
+    const testData = {
+      id: 1,
+      name: "Test User",
+      email: "test@example.com",
+      createdAt: "2024-01-01T00:00:00Z",
+      updatedAt: "2024-01-01T00:00:00Z",
+    };
 
     openModal("userDetails", testData);
 
@@ -29,7 +35,13 @@ describe("modalStore", () => {
   it("should close modal and reset state", () => {
     const { openModal, closeModal } = useModalStore.getState();
 
-    openModal("userDetails", { id: 1 });
+    openModal("userDetails", {
+      id: 1,
+      name: "Test User",
+      email: "test@example.com",
+      createdAt: "2024-01-01T00:00:00Z",
+      updatedAt: "2024-01-01T00:00:00Z",
+    });
     closeModal();
 
     const state = useModalStore.getState();
@@ -41,15 +53,29 @@ describe("modalStore", () => {
   it("should handle multiple modal operations", () => {
     const { openModal, closeModal } = useModalStore.getState();
 
-    openModal("edit", { data: "first" });
+    const firstUser = {
+      id: 1,
+      name: "First User",
+      email: "first@example.com",
+      createdAt: "2024-01-01T00:00:00Z",
+      updatedAt: "2024-01-01T00:00:00Z",
+    };
+    openModal("editUser", firstUser);
     let state = useModalStore.getState();
-    expect(state.modalType).toBe("edit");
-    expect(state.modalData).toEqual({ data: "first" });
+    expect(state.modalType).toBe("editUser");
+    expect(state.modalData).toEqual(firstUser);
 
-    openModal("delete", { data: "second" });
+    const secondUser = {
+      id: 2,
+      name: "Second User",
+      email: "second@example.com",
+      createdAt: "2024-01-02T00:00:00Z",
+      updatedAt: "2024-01-02T00:00:00Z",
+    };
+    openModal("deleteUser", secondUser);
     state = useModalStore.getState();
-    expect(state.modalType).toBe("delete");
-    expect(state.modalData).toEqual({ data: "second" });
+    expect(state.modalType).toBe("deleteUser");
+    expect(state.modalData).toEqual(secondUser);
 
     closeModal();
     state = useModalStore.getState();

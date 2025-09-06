@@ -1,14 +1,9 @@
-export type ModalType = "userDetails" | "createUser" | "edit" | "delete";
+import type {
+  UserModalType,
+  UserModalDataMap,
+} from "@/features/users/types/modals";
 
-export interface ModalState {
-  isOpen: boolean;
-  modalType: ModalType | null;
-  modalData: unknown;
-}
+// If you add other feature modals, you can just union them
+export type ModalType = UserModalType;
 
-export interface ModalActions {
-  openModal: (type: ModalType, data?: unknown) => void;
-  closeModal: () => void;
-}
-
-export type ModalStore = ModalState & ModalActions;
+export type ModalDataMap = UserModalDataMap;

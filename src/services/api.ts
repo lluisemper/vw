@@ -46,3 +46,15 @@ export async function putJSON<TRequest, TResponse>(
 
   return await response.json();
 }
+
+export async function deleteJSON(endpoint: string): Promise<void> {
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    method: "DELETE",
+  });
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(
+      `HTTP error! status: ${response.status}, message: ${errorText}`
+    );
+  }
+}

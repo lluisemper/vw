@@ -13,17 +13,29 @@ vi.mock("@/components/ui", () => ({
   ),
 }));
 
-// Mock the lazy-loaded modal components
-vi.mock("@/features/users/components/UserDetailsModal", () => ({
-  default: ({ user }: { user: { name?: string } | null }) => (
-    <div data-testid="user-details-modal">
-      User Details Modal for {user?.name || "Unknown"}
-    </div>
-  ),
-}));
-
-vi.mock("@/features/users/components/CreateUserModal", () => ({
-  default: () => <div data-testid="create-user-modal">Create User Modal</div>,
+// Mock the UserModals component
+vi.mock("@/features/users/components/UserModals", () => ({
+  UserModals: ({
+    modalType,
+    modalData,
+  }: {
+    modalType: string;
+    modalData: unknown;
+  }) => {
+    switch (modalType) {
+      case "createUser":
+        return <div data-testid="create-user-modal">Create User Modal</div>;
+      case "userDetails":
+        return (
+          <div data-testid="user-details-modal">
+            User Details Modal for{" "}
+            {(modalData as { name?: string })?.name || "Unknown"}
+          </div>
+        );
+      default:
+        return null;
+    }
+  },
 }));
 
 describe("ModalShell", () => {
@@ -55,14 +67,7 @@ describe("ModalShell", () => {
 
     render(<ModalShell />);
 
-    // Should show loading spinner initially due to lazy loading
-    expect(screen.getByTestId("loading-spinner")).toBeInTheDocument();
-    expect(screen.getByTestId("loading-spinner")).toHaveAttribute(
-      "data-size",
-      "md"
-    );
-
-    // Eventually should show the modal
+    // Should show the modal (mocked component renders immediately)
     await expect(
       screen.findByTestId("create-user-modal")
     ).resolves.toBeInTheDocument();
@@ -83,10 +88,7 @@ describe("ModalShell", () => {
 
     render(<ModalShell />);
 
-    // Should show loading spinner initially
-    expect(screen.getByTestId("loading-spinner")).toBeInTheDocument();
-
-    // Eventually should show the modal with user data
+    // Should show the modal with user data (mocked component renders immediately)
     await expect(
       screen.findByTestId("user-details-modal")
     ).resolves.toBeInTheDocument();
@@ -112,20 +114,19 @@ describe("ModalShell", () => {
     expect(modalElement).toHaveTextContent("User Details Modal for Unknown");
   });
 
-  it("should handle different modal types gracefully", () => {
+  it("should handle different modal types gracefully", async () => {
     vi.mocked(useModalStore).mockReturnValue({
       ...mockModalStore,
-      modalType: "unknownModal" as "createUser" | "userDetails",
+      modalType: "unknownModal" as "createUser",
     });
 
-    const { container } = render(<ModalShell />);
+    render(<ModalShell />);
 
-    // Should render Suspense wrapper but no modal content for unknown types
-    // Since no matching modal component is rendered, nothing should be in the DOM
-    expect(container).toBeEmptyDOMElement();
+    // Since UserModals returns null for unknown types, nothing else should render
+    expect(screen.queryByTestId("create-user-modal")).not.toBeInTheDocument();
   });
 
-  it("should properly configure the loading fallback structure", () => {
+  it("should properly configure the loading fallback structure", async () => {
     // This test verifies the fallback structure is properly configured
     // We test this indirectly through the ModalShell implementation
     vi.mocked(useModalStore).mockReturnValue({
@@ -137,6 +138,8 @@ describe("ModalShell", () => {
     expect(() => render(<ModalShell />)).not.toThrow();
 
     // Should eventually render the modal component
-    expect(screen.getByTestId("create-user-modal")).toBeInTheDocument();
+    await expect(
+      screen.findByTestId("create-user-modal")
+    ).resolves.toBeInTheDocument();
   });
 });
