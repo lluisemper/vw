@@ -27,6 +27,7 @@ export const LoadingSpinner = ({
       className={`animate-spin rounded-full border-2 ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
       role="status"
       aria-label="Loading"
+      data-testid="loader-icon"
     >
       <span className="sr-only">Loading...</span>
     </div>

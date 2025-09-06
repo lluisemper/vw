@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { UserPlus, Loader2 } from "lucide-react";
+import { UserPlus } from "lucide-react";
 import { FormModal } from "@/components/forms/FormModal";
 import { FormField, TextInput } from "@/components/forms/FormField";
 import { useCreateUser } from "@/features/users/hooks/useCreateUser";
 import { useModalStore } from "@/stores/modalStore";
 import { createUserSchema, type CreateUserInput } from "@/schemas/userSchema";
+import { Button } from "@/components/ui";
 
 interface FormErrors {
   name?: string;
@@ -156,31 +157,24 @@ function CreateUserModal() {
         )}
 
         <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
-          <button
+          <Button
             type="button"
+            variant="outline"
             onClick={handleClose}
             disabled={isLoading}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             Cancel
-          </button>
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
+          </Button>
+          <Button type="submit" loading={isLoading} disabled={isLoading}>
             {isLoading ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Creating...
-              </>
+              "Creating..."
             ) : (
               <>
                 <UserPlus className="h-4 w-4 mr-2" />
                 Create User
               </>
             )}
-          </button>
+          </Button>
         </div>
       </form>
     </FormModal>
