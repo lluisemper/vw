@@ -87,7 +87,7 @@ export const Modal = ({
             )}
             {showCloseButton && (
               <IconButton onClick={onRequestClose} aria-label="Close modal">
-                <X className="h-5 w-5 text-gray-400" />
+                <X className="h-5 w-5 text-gray-400" aria-hidden="true" />
               </IconButton>
             )}
           </div>

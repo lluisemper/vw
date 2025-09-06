@@ -40,7 +40,10 @@ export function PaginationControls({
   }
 
   return (
-    <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <nav
+      className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+      aria-label="Pagination"
+    >
       {/* Navigation Controls */}
       <div className="flex items-center justify-center sm:justify-start space-x-1">
         <IconButton
@@ -49,7 +52,7 @@ export function PaginationControls({
           variant="outline"
           size="sm"
         >
-          <ChevronsLeft className="h-4 w-4" />
+          <ChevronsLeft className="h-4 w-4" aria-hidden="true" />
           <span className="sr-only">First page</span>
         </IconButton>
         <IconButton
@@ -59,8 +62,10 @@ export function PaginationControls({
           size="md"
           className="px-3"
         >
-          <ChevronLeft className="h-4 w-4 mr-1" />
-          <span className="hidden sm:inline text-xs sm:text-sm">Previous</span>
+          <ChevronLeft className="h-4 w-4 mr-1" aria-hidden="true" />
+          <span className="sr-only sm:not-sr-only text-xs sm:text-sm">
+            Previous
+          </span>
         </IconButton>
         <IconButton
           onClick={onNextPage}
@@ -69,8 +74,10 @@ export function PaginationControls({
           size="md"
           className="px-3"
         >
-          <span className="hidden sm:inline text-xs sm:text-sm">Next</span>
-          <ChevronRight className="h-4 w-4 ml-1" />
+          <span className="sr-only sm:not-sr-only text-xs sm:text-sm">
+            Next
+          </span>
+          <ChevronRight className="h-4 w-4 ml-1" aria-hidden="true" />
         </IconButton>
         <IconButton
           onClick={onLastPage}
@@ -78,7 +85,7 @@ export function PaginationControls({
           variant="outline"
           size="sm"
         >
-          <ChevronsRight className="h-4 w-4" />
+          <ChevronsRight className="h-4 w-4" aria-hidden="true" />
           <span className="sr-only">Last page</span>
         </IconButton>
       </div>
@@ -111,6 +118,6 @@ export function PaginationControls({
           </span>
         </div>
       </div>
-    </div>
+    </nav>
   );
 }

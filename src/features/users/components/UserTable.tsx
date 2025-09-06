@@ -142,7 +142,11 @@ export const UserTable = ({
         header: "Actions",
         size: 150,
         cell: ({ row }) => (
-          <div className="flex items-center justify-center space-x-1">
+          <div
+            role="group"
+            aria-label={`Actions for ${row.original.name}`}
+            className="flex items-center justify-center space-x-1"
+          >
             <IconButton
               onClick={() => openModal("userDetails", row.original)}
               variant="ghost"
@@ -150,7 +154,7 @@ export const UserTable = ({
               className="text-gray-400 hover:text-blue-600 hover:bg-blue-50"
               aria-label={`View details for ${row.original.name}`}
             >
-              <Eye className="h-4 w-4" />
+              <Eye className="h-4 w-4" aria-hidden="true" />
             </IconButton>
             <IconButton
               onClick={() => openModal("editUser", row.original)}
@@ -159,16 +163,15 @@ export const UserTable = ({
               className="text-gray-400 hover:text-green-600 hover:bg-green-50"
               aria-label={`Edit ${row.original.name}`}
             >
-              <Edit2 className="h-4 w-4" />
+              <Edit2 className="h-4 w-4" aria-hidden="true" />
             </IconButton>
             <IconButton
               onClick={() => openModal("deleteUser", row.original)}
-              variant="ghost"
+              variant="danger"
               size="sm"
-              className="text-gray-400 hover:text-red-600 hover:bg-red-50"
               aria-label={`Delete ${row.original.name}`}
             >
-              <Trash2 className="h-4 w-4" />
+              <Trash2 className="h-4 w-4" aria-hidden="true" />
             </IconButton>
           </div>
         ),
