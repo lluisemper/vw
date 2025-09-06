@@ -29,7 +29,7 @@ function App() {
   );
   // #endregion
   return (
-    <div className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-gray-50">
       <DataTableShell
         title="User Management"
         subtitle="Manage and view all users in your organization"
@@ -60,7 +60,7 @@ function App() {
           },
         }}
       />
-    </div>
+    </main>
   );
 }
 
