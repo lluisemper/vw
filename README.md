@@ -85,3 +85,32 @@ Summary:
 Branch protection on master branch, can only merge with PR.
 
 Commit guidelines: ...
+
+#### Bundle Optimization
+
+- This document outlines the optimizations and code-splitting strategies applied to the production build.
+
+  1.  Build Tool & Configuration
+
+  - Vite is used for fast builds and tree-shaking.
+  - TailwindCSS is included via `@tailwindcss/vite` plugin.
+  - Aliases for clean imports:
+  - Rollup manualChunks configured for logical splitting.
+
+  2.  [Manual Chunks Strategy](vite.config.ts)
+      Main check has been decoupled from:
+
+  - Larger libraries
+  - Libraries and components that are not needed immediately(Modals and validation of the forms in the modals)
+
+  3.  Lazy Loading
+
+  Components like [modals](/src/components/ui/modal/ModalShell.tsx) are wrapped in React.lazy + Suspense:
+  This ensures modal dependencies (like yup, react-modal, and modals components) load only when required.
+
+  ***
+
+  4.  Tree-Shaking
+
+  - All code uses ES modules for tree-shaking.
+  - Named imports normally improve tree-shaking.
