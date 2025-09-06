@@ -23,20 +23,26 @@ function CreateUserModal() {
   const { closeModal } = useModalStore();
 
   const validateForm = (): boolean => {
-    const result = createUserSchema.safeParse(formData);
-
-    if (!result.success) {
+    try {
+      createUserSchema.validateSync(formData, { abortEarly: false });
+      setErrors({});
+      return true;
+    } catch (error: unknown) {
       const fieldErrors: FormErrors = {};
-      result.error.issues.forEach((issue) => {
-        const field = issue.path[0] as keyof CreateUserInput;
-        fieldErrors[field] = issue.message;
-      });
+      if (
+        error &&
+        typeof error === "object" &&
+        "inner" in error &&
+        Array.isArray(error.inner)
+      ) {
+        error.inner.forEach((err: { path: string; message: string }) => {
+          const field = err.path as keyof CreateUserInput;
+          fieldErrors[field] = err.message;
+        });
+      }
       setErrors(fieldErrors);
       return false;
     }
-
-    setErrors({});
-    return true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -61,16 +67,23 @@ function CreateUserModal() {
     value: string
   ): string | undefined => {
     const tempData = { ...formData, [field]: value };
-    const result = createUserSchema.safeParse(tempData);
-
-    if (!result.success) {
-      const fieldError = result.error.issues.find(
-        (issue) => issue.path[0] === field
-      );
-      return fieldError?.message;
+    try {
+      createUserSchema.validateSync(tempData, { abortEarly: false });
+      return undefined;
+    } catch (error: unknown) {
+      if (
+        error &&
+        typeof error === "object" &&
+        "inner" in error &&
+        Array.isArray(error.inner)
+      ) {
+        const fieldError = error.inner.find(
+          (err: { path: string; message: string }) => err.path === field
+        );
+        return fieldError?.message;
+      }
+      return undefined;
     }
-
-    return undefined;
   };
 
   const handleInputChange = (field: keyof CreateUserInput, value: string) => {

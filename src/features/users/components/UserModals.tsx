@@ -3,6 +3,8 @@ import EditUserModal from "./EditUserModal";
 import DeleteUserModal from "./DeleteUserModal";
 import UserDetailsModal from "./UserDetailsModal";
 import type { ModalType, User } from "@/types";
+import Modal from "react-modal";
+Modal.setAppElement("#root");
 
 interface UserModalsProps {
   modalType: ModalType;

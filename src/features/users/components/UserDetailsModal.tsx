@@ -1,4 +1,4 @@
-import { Modal } from "@/components/ui";
+import { Modal } from "@/components/ui/modal/Modal";
 import { useModalStore } from "@/stores/modalStore";
 import type { User } from "@/types";
 import { formatDate } from "@/utils/dateUtils";
