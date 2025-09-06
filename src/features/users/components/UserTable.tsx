@@ -160,7 +160,7 @@ export const UserTable = ({
               onClick={() => openModal("editUser", row.original)}
               variant="ghost"
               size="sm"
-              className="text-gray-400 hover:text-green-600 hover:bg-green-50"
+              className="text-gray-400 hover:text-blue-600 hover:bg-blue-50"
               aria-label={`Edit ${row.original.name}`}
             >
               <Edit2 className="h-4 w-4" aria-hidden="true" />

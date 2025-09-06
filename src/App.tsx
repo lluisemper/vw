@@ -1,14 +1,10 @@
 import { Toaster } from "react-hot-toast";
 import { UserPlus } from "lucide-react";
-import Modal from "react-modal";
-
 import { useUsers } from "@/features/users/hooks/useUsers";
 import { DataTableShell } from "@/components/data-table/DataTableShell";
 import { UserTable } from "@/features/users/components/UserTable";
 import { useModalStore } from "@/stores/modalStore";
 import { ModalShell, Button } from "@/components/ui";
-
-Modal.setAppElement("#root");
 
 function App() {
   const { users, isLoading, error, refetch } = useUsers();
