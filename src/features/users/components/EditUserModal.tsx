@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { UserPen, Loader2 } from "lucide-react";
+import { UserPen } from "lucide-react";
 import { FormModal } from "@/components/forms/FormModal";
 import { FormField, TextInput } from "@/components/forms/FormField";
 import { useUpdateUser } from "@/features/users/hooks/useUpdateUser";
 import { useModalStore } from "@/stores/modalStore";
 import { updateUserSchema, type UpdateUserInput } from "@/schemas/userSchema";
 import type { User } from "@/types";
+import { Button } from "@/components/ui";
 
 interface FormErrors {
   name?: string;
@@ -180,31 +181,28 @@ function EditUserModal({ user }: EditUserModalProps) {
         )}
 
         <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
-          <button
+          <Button
             type="button"
+            variant="outline"
             onClick={handleClose}
             disabled={isLoading}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             type="submit"
+            loading={isLoading}
             disabled={isLoading || !hasChanges}
-            className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {isLoading ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Updating...
-              </>
+              "Updating..."
             ) : (
               <>
                 <UserPen className="h-4 w-4 mr-2" />
                 Update User
               </>
             )}
-          </button>
+          </Button>
         </div>
       </form>
     </FormModal>

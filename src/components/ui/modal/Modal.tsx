@@ -2,6 +2,7 @@ import ReactModal from "react-modal";
 import { X } from "lucide-react";
 import { useRef, useEffect } from "react";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
+import { IconButton } from "../IconButton";
 
 interface ModalProps {
   isOpen: boolean;
@@ -85,13 +86,9 @@ export const Modal = ({
               <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
             )}
             {showCloseButton && (
-              <button
-                onClick={onRequestClose}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                aria-label="Close modal"
-              >
+              <IconButton onClick={onRequestClose} aria-label="Close modal">
                 <X className="h-5 w-5 text-gray-400" />
-              </button>
+              </IconButton>
             )}
           </div>
         )}

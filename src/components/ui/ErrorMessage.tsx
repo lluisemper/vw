@@ -1,4 +1,5 @@
 import { X, AlertTriangle, RotateCcw } from "lucide-react";
+import { Button } from "./Button";
 
 interface ErrorMessageProps {
   message: string;
@@ -21,16 +22,16 @@ export const ErrorMessage = ({
       icon: "text-red-400",
       title: "text-red-800",
       message: "text-red-700",
-      button:
-        "bg-red-50 text-red-800 hover:bg-red-100 focus:ring-red-600 focus:ring-offset-red-50",
+      buttonClass:
+        "bg-red-50 text-red-800 hover:bg-red-100 focus:ring-red-600",
     },
     warning: {
       container: "bg-yellow-50 border-yellow-200",
       icon: "text-yellow-400",
       title: "text-yellow-800",
       message: "text-yellow-700",
-      button:
-        "bg-yellow-50 text-yellow-800 hover:bg-yellow-100 focus:ring-yellow-600 focus:ring-offset-yellow-50",
+      buttonClass:
+        "bg-yellow-50 text-yellow-800 hover:bg-yellow-100 focus:ring-yellow-600",
     },
   };
 
@@ -58,14 +59,15 @@ export const ErrorMessage = ({
           </div>
           {onRetry && (
             <div className="mt-4">
-              <button
-                type="button"
-                className={`inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${styles.button}`}
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={onRetry}
+                className={styles.buttonClass}
               >
                 <RotateCcw className="-ml-0.5 mr-2 h-4 w-4" />
                 Try again
-              </button>
+              </Button>
             </div>
           )}
         </div>

@@ -4,6 +4,7 @@ import {
   ChevronRight,
   ChevronsRight,
 } from "lucide-react";
+import { IconButton } from "../IconButton";
 
 interface PaginationControlsProps {
   currentPage: number;
@@ -42,38 +43,44 @@ export function PaginationControls({
     <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       {/* Navigation Controls */}
       <div className="flex items-center justify-center sm:justify-start space-x-1">
-        <button
+        <IconButton
           onClick={onFirstPage}
           disabled={!canPreviousPage}
-          className="inline-flex items-center rounded-md bg-white px-2 sm:px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white transition-all duration-200"
+          variant="outline"
+          size="sm"
         >
           <ChevronsLeft className="h-4 w-4" />
           <span className="sr-only">First page</span>
-        </button>
-        <button
+        </IconButton>
+        <IconButton
           onClick={onPreviousPage}
           disabled={!canPreviousPage}
-          className="inline-flex items-center rounded-md bg-white px-2 sm:px-3 py-1.5 text-xs sm:text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white transition-all duration-200"
+          variant="outline"
+          size="md"
+          className="px-3"
         >
           <ChevronLeft className="h-4 w-4 mr-1" />
-          <span className="hidden sm:inline">Previous</span>
-        </button>
-        <button
+          <span className="hidden sm:inline text-xs sm:text-sm">Previous</span>
+        </IconButton>
+        <IconButton
           onClick={onNextPage}
           disabled={!canNextPage}
-          className="inline-flex items-center rounded-md bg-white px-2 sm:px-3 py-1.5 text-xs sm:text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white transition-all duration-200"
+          variant="outline"
+          size="md"
+          className="px-3"
         >
-          <span className="hidden sm:inline">Next</span>
+          <span className="hidden sm:inline text-xs sm:text-sm">Next</span>
           <ChevronRight className="h-4 w-4 ml-1" />
-        </button>
-        <button
+        </IconButton>
+        <IconButton
           onClick={onLastPage}
           disabled={!canNextPage}
-          className="inline-flex items-center rounded-md bg-white px-2 sm:px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white transition-all duration-200"
+          variant="outline"
+          size="sm"
         >
           <ChevronsRight className="h-4 w-4" />
           <span className="sr-only">Last page</span>
-        </button>
+        </IconButton>
       </div>
 
       {/* Page Info and Size Controls */}
@@ -89,7 +96,7 @@ export function PaginationControls({
             id="page-size"
             value={pageSize}
             onChange={(e) => onPageSizeChange(Number(e.target.value))}
-            className="rounded-md border-0 py-1.5 pl-2 sm:pl-3 pr-6 sm:pr-8 text-xs sm:text-sm text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-blue-600"
+            className="rounded-lg border-0 py-2 pl-3 pr-8 text-sm text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 transition-colors bg-white shadow-sm hover:ring-gray-400"
           >
             {pageSizeOptions.map((size) => (
               <option key={size} value={size}>
