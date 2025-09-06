@@ -132,19 +132,32 @@ describe("userService", () => {
         email: "john.doe@example.com",
       };
 
+      const mockExistingUsers: User[] = [
+        {
+          id: 1,
+          name: "Existing User",
+          email: "existing@example.com",
+          createdAt: "2024-01-01T00:00:00Z",
+          updatedAt: "2024-01-01T00:00:00Z",
+        },
+      ];
+
       const mockCreatedUser: User = {
-        id: 1,
+        id: 2,
         name: "John Doe",
         email: "john.doe@example.com",
         createdAt: "2024-01-01T00:00:00Z",
         updatedAt: "2024-01-01T00:00:00Z",
       };
 
+      mockFetchJSON.mockResolvedValue(mockExistingUsers);
       mockPostJSON.mockResolvedValue(mockCreatedUser);
 
       const result = await userService.createUser(createData);
 
+      expect(fetchJSON).toHaveBeenCalledWith("/users");
       expect(postJSON).toHaveBeenCalledWith("/users", {
+        id: 2,
         name: "John Doe",
         email: "john.doe@example.com",
         createdAt: expect.any(String),
@@ -160,6 +173,16 @@ describe("userService", () => {
         email: "jane.smith@example.com",
       };
 
+      const mockExistingUsers: User[] = [
+        {
+          id: 1,
+          name: "Existing User",
+          email: "existing@example.com",
+          createdAt: "2024-01-01T00:00:00Z",
+          updatedAt: "2024-01-01T00:00:00Z",
+        },
+      ];
+
       const mockCreatedUser: User = {
         id: 2,
         name: "Jane Smith",
@@ -168,6 +191,7 @@ describe("userService", () => {
         updatedAt: "2024-01-02T00:00:00Z",
       };
 
+      mockFetchJSON.mockResolvedValue(mockExistingUsers);
       mockPostJSON.mockResolvedValue(mockCreatedUser);
 
       await userService.createUser(createData);
@@ -184,6 +208,17 @@ describe("userService", () => {
         name: "John Doe",
         email: "john.doe@example.com",
       };
+
+      const mockExistingUsers: User[] = [
+        {
+          id: 1,
+          name: "test",
+          email: "test",
+          createdAt: "2024-01-01T00:00:00Z",
+          updatedAt: "2024-01-01T00:00:00Z",
+        },
+      ];
+      mockFetchJSON.mockResolvedValue(mockExistingUsers);
 
       const mockError = new Error("Creation failed");
       mockPostJSON.mockRejectedValue(mockError);

@@ -114,3 +114,7 @@ Commit guidelines: ...
 
   - All code uses ES modules for tree-shaking.
   - Named imports normally improve tree-shaking.
+
+#### Known issue
+
+When creating a user I do an extra get request of the users to get the last id and to be able to assign a next one. This would not be implemented in a system with a real API that generates the IDs in the backend.

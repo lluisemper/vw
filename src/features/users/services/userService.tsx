@@ -5,20 +5,30 @@ import type { CreateUserInput, UpdateUserInput } from "@/schemas/userSchema";
 
 export const userService = {
   getUsers: () => fetchJSON<User[]>("/users"),
-  createUser: (userData: CreateUserInput) => {
+  createUser: async (userData: CreateUserInput) => {
     const now = new Date().toISOString();
-    return postJSON<CreateUserInput & { createdAt: string; updatedAt: string }, User>("/users", {
+    const users = await fetchJSON<User[]>("/users");
+    console.log(users[users.length - 1].id);
+    const nextId = Number(users[users.length - 1].id) + 1;
+    return postJSON<
+      CreateUserInput & { id: number; createdAt: string; updatedAt: string },
+      User
+    >("/users", {
+      id: nextId,
       ...userData,
       createdAt: now,
       updatedAt: now,
     });
   },
   updateUser: (userData: UpdateUserInput) =>
-    putJSON<Omit<UpdateUserInput, "id"> & { updatedAt: string }, User>(`/users/${userData.id}`, {
-      name: userData.name,
-      email: userData.email,
-      createdAt: userData.createdAt,
-      updatedAt: new Date().toISOString(),
-    }),
+    putJSON<Omit<UpdateUserInput, "id"> & { updatedAt: string }, User>(
+      `/users/${userData.id}`,
+      {
+        name: userData.name,
+        email: userData.email,
+        createdAt: userData.createdAt,
+        updatedAt: new Date().toISOString(),
+      }
+    ),
   deleteUser: (userId: number) => deleteJSON(`/users/${userId}`),
 };

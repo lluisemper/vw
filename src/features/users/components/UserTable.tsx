@@ -58,7 +58,7 @@ export const UserTable = ({
           const cellContext = context as CellContext;
           return (
             <div className="flex items-center">
-              <div className="flex-shrink-0 h-8 w-8">
+              <div className="hidden sm:block flex-shrink-0 h-8 w-8">
                 <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-sm font-semibold">
                   {(row.getValue("name") as string).charAt(0)}
                 </div>
