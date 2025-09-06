@@ -81,13 +81,13 @@ describe("EditUserModal", () => {
     expect(
       screen.getByText("Update user information for John Doe")
     ).toBeInTheDocument();
-    
+
     const nameInput = screen.getByRole("textbox", { name: /full name/i });
     const emailInput = screen.getByRole("textbox", { name: /email address/i });
-    
+
     expect(nameInput).toHaveValue("John Doe");
     expect(emailInput).toHaveValue("john.doe@example.com");
-    
+
     expect(
       screen.getByRole("button", { name: /update user/i })
     ).toBeInTheDocument();
@@ -161,7 +161,7 @@ describe("EditUserModal", () => {
 
     // Form validation should prevent submission without calling the API
     expect(mockUpdateUser).not.toHaveBeenCalled();
-    
+
     // Check for validation errors
     expect(screen.getByText("Name is required")).toBeInTheDocument();
   });
@@ -240,7 +240,7 @@ describe("EditUserModal", () => {
     });
 
     // Wait a bit more to ensure any delayed effects complete
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     // Modal should not close if update failed
     expect(mockCloseModal).not.toHaveBeenCalled();
@@ -336,7 +336,7 @@ describe("EditUserModal", () => {
     render(<EditUserModal user={mockUser} />);
 
     const formModal = screen.getByTestId("form-modal");
-    expect(formModal).toHaveAttribute("data-modal-type", "edit");
+    expect(formModal).toHaveAttribute("data-modal-type", "editUser");
     expect(formModal).toHaveAttribute("data-submitting", "true");
     expect(screen.getByText("Edit User")).toBeInTheDocument();
   });
@@ -410,7 +410,9 @@ describe("EditUserModal", () => {
 
     // Verify validation errors are shown
     expect(screen.getByText("Name is required")).toBeInTheDocument();
-    expect(screen.getByText("Please enter a valid email address")).toBeInTheDocument();
+    expect(
+      screen.getByText("Please enter a valid email address")
+    ).toBeInTheDocument();
 
     // Verify API was not called
     expect(mockUpdateUser).not.toHaveBeenCalled();
@@ -419,7 +421,7 @@ describe("EditUserModal", () => {
 
   it("should handle successful submission workflow with createdAt preservation", async () => {
     const user = userEvent.setup();
-    
+
     // Test with specific createdAt to ensure it's preserved
     const testUser = {
       ...mockUser,
@@ -429,7 +431,7 @@ describe("EditUserModal", () => {
     const mockResponse = {
       ...testUser,
       name: "New Name",
-      email: "new@email.com", 
+      email: "new@email.com",
       updatedAt: "2024-01-02T12:00:00Z",
     };
 

@@ -62,6 +62,7 @@ vi.mock("lucide-react", () => ({
   Clock: () => <span data-testid="clock-icon">🕐</span>,
   RotateCcw: () => <span data-testid="rotate-ccw-icon">↺</span>,
   Users: () => <span data-testid="users-icon">👥</span>,
+  Trash2: () => <span data-testid="trash2-icon">🗑️</span>,
 }));
 
 describe("EditUserModal Integration", () => {

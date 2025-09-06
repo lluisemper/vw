@@ -82,6 +82,7 @@ vi.mock("lucide-react", () => ({
     </span>
   ),
   Edit2: () => <span data-testid="edit2-icon">✏️</span>,
+  Trash2: () => <span data-testid="trash2-icon">🗑️</span>,
 }));
 
 // Mock fetch to simulate API calls
