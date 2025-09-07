@@ -1,6 +1,6 @@
 # Assumptions and Technical Decisions
 
-## Assumptions 
+## Assumptions
 
 ### API
 
@@ -27,12 +27,12 @@
 - Unit tests cover core functionality; full coverage is not required.
 - CI/CD pipeline handles automated testing and deployment
 
-
 ## Technology Stack Decisions
 
 ### State Management
 
 **Zustand Reasoning:**
+
 - Lightweight and minimal boilerplate.
 - Simple global state store for CRUD operations.
 - Minimal setup.
@@ -52,6 +52,7 @@ Provides accessible modals out of the box.
 ### Data Table
 
 **react-table: Reasoning:**
+
 - Lightweight and highly customizable table.
 - PEasy to style with tailwind.
 - Avoids reinventing complex table logic.
@@ -59,5 +60,8 @@ Provides accessible modals out of the box.
 ### Data Fetching
 
 **swr: Reasoning:**
+
 - Avoids mixing server and client state.
-- Stale-while-revalidate, if cached data, it will be server while fresh one is being requested.
+- Deduping safeguard.
+- If the app were to grow and same keys called from different components, it adds a cache-layer(This feature is not needed)
+- Refetch helper out of the box

@@ -70,7 +70,7 @@ describe("EditUserModal Integration", () => {
   const mockCloseModal = vi.fn();
 
   const mockUser: User = {
-    id: 1,
+    id: "1",
     name: "John Doe",
     email: "john.doe@example.com",
     createdAt: "2024-01-01T00:00:00Z",
@@ -136,7 +136,7 @@ describe("EditUserModal Integration", () => {
     // Verify the update was called with correct data
     await waitFor(() => {
       expect(mockUpdateUser).toHaveBeenCalledWith({
-        id: 1,
+        id: "1",
         name: "Jane Smith",
         email: "jane.smith@example.com",
         createdAt: "2024-01-01T00:00:00Z",
@@ -205,7 +205,7 @@ describe("EditUserModal Integration", () => {
 
     await waitFor(() => {
       expect(mockUpdateUser).toHaveBeenCalledWith({
-        id: 1,
+        id: "1",
         name: "Jane Doe",
         email: "john.doe@example.com",
         createdAt: "2024-01-01T00:00:00Z",
@@ -239,7 +239,6 @@ describe("EditUserModal Integration", () => {
   });
 
   it("should show loading state during submission", async () => {
-
     // Mock loading state
     vi.mocked(useUpdateUser).mockReturnValue({
       ...defaultMockUpdateUser,

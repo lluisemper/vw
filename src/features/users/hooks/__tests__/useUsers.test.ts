@@ -63,14 +63,14 @@ describe("useUsers", () => {
   it("returns users array when data is available", () => {
     const mockUsers: User[] = [
       {
-        id: 1,
+        id: "1",
         name: "John Doe",
         email: "john@example.com",
         createdAt: "2024-01-01T00:00:00Z",
         updatedAt: "2024-01-01T00:00:00Z",
       },
       {
-        id: 2,
+        id: "2",
         name: "Jane Smith",
         email: "jane@example.com",
         createdAt: "2024-01-02T00:00:00Z",
@@ -132,7 +132,7 @@ describe("useUsers", () => {
   it("calls userService.getUsers through the fetcher", async () => {
     const mockUsers: User[] = [
       {
-        id: 1,
+        id: "1",
         name: "John Doe",
         email: "john@example.com",
         createdAt: "2024-01-01T00:00:00Z",

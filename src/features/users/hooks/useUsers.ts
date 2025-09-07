@@ -8,7 +8,7 @@ export function useUsers() {
   const { data, error, isLoading, mutate } = useSWR<User[]>("users", fetcher, {
     revalidateOnFocus: false,
     revalidateOnReconnect: true,
-    dedupingInterval: 5000,
+    dedupingInterval: 5000, // Safeguards against duplicate requests
   });
 
   return {

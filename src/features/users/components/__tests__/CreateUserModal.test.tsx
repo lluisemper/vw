@@ -174,7 +174,7 @@ describe("CreateUserModal", () => {
   it("should submit form with valid data", async () => {
     const user = userEvent.setup();
     const mockUser = {
-      id: 1,
+      id: "1",
       name: "John Doe",
       email: "john.doe@example.com",
       createdAt: "2024-01-01T00:00:00Z",
