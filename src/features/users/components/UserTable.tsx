@@ -8,19 +8,14 @@ import {
   Clock,
   RotateCcw,
   Users,
-  Eye,
-  Edit2,
-  Trash2,
 } from "lucide-react";
 import type { User } from "@/types";
 import { formatDate } from "@/utils/dateUtils";
 import { GenericDataTable } from "@/components/data-table/GenericDataTable";
-import { useModalStore } from "@/stores/modalStore";
-import { IconButton } from "@/components/ui";
+import { UserActionButtons } from "./UserActionButtons";
 
 interface UserTableProps {
   users: User[];
-  className?: string;
   searchBarActions?: React.ReactNode;
 }
 
@@ -29,13 +24,7 @@ interface CellContext {
   isExpanded?: boolean;
 }
 
-export const UserTable = ({
-  users,
-  className,
-  searchBarActions,
-}: UserTableProps) => {
-  const { openModal } = useModalStore();
-
+export const UserTable = ({ users, searchBarActions }: UserTableProps) => {
   const columns = useMemo<ColumnDef<User>[]>(
     () => [
       {
@@ -142,71 +131,47 @@ export const UserTable = ({
         header: "Actions",
         size: 150,
         cell: ({ row }) => (
-          <div
-            role="group"
-            aria-label={`Actions for ${row.original.name}`}
-            className="flex items-center justify-center space-x-1"
-          >
-            <IconButton
-              onClick={() => openModal("userDetails", row.original)}
-              variant="ghost"
-              size="sm"
-              className="text-gray-400 hover:text-blue-600 hover:bg-blue-50"
-              aria-label={`View details for ${row.original.name}`}
-            >
-              <Eye className="h-4 w-4" aria-hidden="true" />
-            </IconButton>
-            <IconButton
-              onClick={() => openModal("editUser", row.original)}
-              variant="ghost"
-              size="sm"
-              className="text-gray-400 hover:text-blue-600 hover:bg-blue-50"
-              aria-label={`Edit ${row.original.name}`}
-            >
-              <Edit2 className="h-4 w-4" aria-hidden="true" />
-            </IconButton>
-            <IconButton
-              onClick={() => openModal("deleteUser", row.original)}
-              variant="danger"
-              size="sm"
-              aria-label={`Delete ${row.original.name}`}
-            >
-              <Trash2 className="h-4 w-4" aria-hidden="true" />
-            </IconButton>
-          </div>
+          <UserActionButtons user={row.original} variant="table" />
         ),
         enableSorting: false,
         meta: {
-          responsiveClass: "", // Always visible
+          responsiveClass: "hidden md:table-cell", // Always visible
         },
       },
     ],
-    // This is not actually needed.
-    // Currently it does not change, however if the behavior were to change in the future it will provide some safeguards.
-    [openModal]
+    // Empty dependency array since columns don't depend on any props or state
+    []
   );
 
   const renderExpandedRow = (user: User) => (
     <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
-      <div className="space-y-3">
-        <div className="flex items-center text-sm">
-          <Hash className="h-4 w-4 text-gray-400 mr-2" />
-          <span className="text-gray-500 font-medium">ID:</span>
-          <span className="ml-2 font-mono text-gray-700">#{user.id}</span>
+      <div className="space-y-4">
+        <div className="space-y-3">
+          <div className="flex items-center text-sm">
+            <Hash className="h-4 w-4 text-gray-400 mr-2" />
+            <span className="text-gray-500 font-medium">ID:</span>
+            <span className="ml-2 font-mono text-gray-700">#{user.id}</span>
+          </div>
+          <div className="flex items-center text-sm">
+            <Clock className="h-4 w-4 text-gray-400 mr-2" />
+            <span className="text-gray-500 font-medium">Created:</span>
+            <span className="ml-2 text-gray-700 tabular-nums">
+              {formatDate(user.createdAt)}
+            </span>
+          </div>
+          <div className="flex items-center text-sm">
+            <RotateCcw className="h-4 w-4 text-gray-400 mr-2" />
+            <span className="text-gray-500 font-medium">Last Updated:</span>
+            <span className="ml-2 text-gray-700 tabular-nums">
+              {formatDate(user.updatedAt)}
+            </span>
+          </div>
         </div>
-        <div className="flex items-center text-sm">
-          <Clock className="h-4 w-4 text-gray-400 mr-2" />
-          <span className="text-gray-500 font-medium">Created:</span>
-          <span className="ml-2 text-gray-700 tabular-nums">
-            {formatDate(user.createdAt)}
-          </span>
-        </div>
-        <div className="flex items-center text-sm">
-          <RotateCcw className="h-4 w-4 text-gray-400 mr-2" />
-          <span className="text-gray-500 font-medium">Last Updated:</span>
-          <span className="ml-2 text-gray-700 tabular-nums">
-            {formatDate(user.updatedAt)}
-          </span>
+        <div className="pt-3 border-t border-gray-200">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-medium text-gray-700">Actions</span>
+            <UserActionButtons user={user} variant="expanded" />
+          </div>
         </div>
       </div>
     </div>
@@ -228,7 +193,6 @@ export const UserTable = ({
       columns={columns}
       searchPlaceholder="Search users..."
       dataCountLabel="users"
-      className={className}
       emptyStateComponent={EmptyState}
       renderExpandedRow={renderExpandedRow}
       searchBarActions={searchBarActions}
