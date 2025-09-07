@@ -235,7 +235,7 @@ describe("Create User Integration", () => {
   it("should successfully create a user and update the list", async () => {
     const user = userEvent.setup();
     const newUser = {
-      id: 3,
+      id: "3",
       name: "New User",
       email: "new.user@example.com",
       createdAt: "2024-01-25T10:00:00Z",
@@ -302,7 +302,7 @@ describe("Create User Integration", () => {
       const postCallArgs = mockFetch.mock.calls[1];
       const body = JSON.parse(postCallArgs[1].body);
       expect(body).toMatchObject({
-        id: 3, // Should be mockUsers.length + 1
+        id: "3", // Should be mockUsers.length + 1
         name: "New User",
         email: "new.user@example.com",
         createdAt: expect.any(String),

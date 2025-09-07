@@ -156,7 +156,7 @@ describe("userService", () => {
 
       expect(fetchJSON).toHaveBeenCalledWith("/users");
       expect(postJSON).toHaveBeenCalledWith("/users", {
-        id: 2,
+        id: "2",
         name: "John Doe",
         email: "john.doe@example.com",
         createdAt: expect.any(String),
