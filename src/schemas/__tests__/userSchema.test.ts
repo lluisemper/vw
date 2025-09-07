@@ -8,7 +8,7 @@ describe("userSchema", () => {
         name: "John Doe",
         email: "john.doe@example.com",
       };
-      
+
       const result = await createUserSchema.validate(validInput);
       expect(result.name).toBe("John Doe");
       expect(result.email).toBe("john.doe@example.com");
@@ -31,7 +31,9 @@ describe("userSchema", () => {
         email: "john.doe@example.com",
       };
 
-      await expect(createUserSchema.validate(input)).rejects.toThrow("Name is required");
+      await expect(createUserSchema.validate(input)).rejects.toThrow(
+        "Name is required"
+      );
     });
 
     it("should accept name that is 1 character", async () => {
@@ -95,7 +97,7 @@ describe("userSchema", () => {
       try {
         await createUserSchema.validate(input, { abortEarly: false });
       } catch (error: unknown) {
-        if (error && typeof error === 'object' && 'inner' in error) {
+        if (error && typeof error === "object" && "inner" in error) {
           expect((error as { inner: unknown[] }).inner).toHaveLength(2);
         }
       }
@@ -105,7 +107,7 @@ describe("userSchema", () => {
   describe("updateUserSchema", () => {
     it("should require all fields for user update", async () => {
       const input = {
-        id: 1,
+        id: "1",
         name: "Jane Smith",
         email: "jane@example.com",
         createdAt: "2024-01-01T00:00:00Z",
@@ -113,14 +115,14 @@ describe("userSchema", () => {
 
       const result = await updateUserSchema.validate(input);
       expect(result.name).toBe("Jane Smith");
-      expect(result.id).toBe(1);
+      expect(result.id).toBe("1");
       expect(result.email).toBe("jane@example.com");
       expect(result.createdAt).toBe("2024-01-01T00:00:00Z");
     });
 
     it("should fail validation when missing required fields", async () => {
       const input = {
-        id: 1,
+        id: "1",
         name: "Jane Smith",
         // missing email and createdAt
       };
@@ -130,7 +132,7 @@ describe("userSchema", () => {
 
     it("should validate email format in update schema", async () => {
       const input = {
-        id: 1,
+        id: "1",
         name: "Jane Smith",
         email: "invalid-email",
         createdAt: "2024-01-01T00:00:00Z",

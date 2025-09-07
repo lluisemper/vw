@@ -150,7 +150,7 @@ export function GenericDataTable<TData>({
                       {row.getVisibleCells().map((cell) => (
                         <TableCell
                           key={cell.id}
-                          responsiveClass={
+                          className={
                             cell.column.columnDef.meta?.responsiveClass || ""
                           }
                         >

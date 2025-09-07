@@ -43,7 +43,7 @@ vi.mock("lucide-react", () => ({
 
 describe("UserDetailsModal", () => {
   const mockUser: User = {
-    id: 1,
+    id: "1",
     name: "John Doe",
     email: "john.doe@example.com",
     createdAt: "2024-01-15T10:00:00Z",
@@ -74,17 +74,6 @@ describe("UserDetailsModal", () => {
     vi.mocked(useModalStore).mockReturnValue({
       ...mockModalStore,
       isOpen: false,
-    });
-
-    render(<UserDetailsModal user={mockUser} />);
-
-    expect(screen.queryByTestId("modal")).not.toBeInTheDocument();
-  });
-
-  it("does not render when modal type is different", () => {
-    vi.mocked(useModalStore).mockReturnValue({
-      ...mockModalStore,
-      modalType: "otherModal",
     });
 
     render(<UserDetailsModal user={mockUser} />);
@@ -140,7 +129,7 @@ describe("UserDetailsModal", () => {
 
   it("handles user with different data", () => {
     const differentUser: User = {
-      id: 999,
+      id: "999",
       name: "Jane Smith",
       email: "jane.smith@test.com",
       createdAt: "2023-12-01T08:00:00Z",

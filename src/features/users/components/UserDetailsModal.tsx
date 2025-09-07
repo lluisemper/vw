@@ -49,14 +49,14 @@ function UserDetailsContent({ user }: { user: User }) {
       </div>
 
       <div className="space-y-4">
-        <UserDetailField 
-          icon={Mail} 
-          label="Email Address" 
+        <UserDetailField
+          icon={Mail}
+          label="Email Address"
           value={
             <Truncate maxLength={40} tooltipPosition="bottom">
               {user.email}
             </Truncate>
-          } 
+          }
         />
         <UserDetailField
           icon={Calendar}
@@ -74,10 +74,7 @@ function UserDetailsContent({ user }: { user: User }) {
 }
 
 export default function UserDetailsModal({ user }: UserDetailsModalProps) {
-  const { isOpen, modalType, closeModal } = useModalStore();
-
-  const isUserModalOpen =
-    isOpen && modalType === "userDetails" && user !== null;
+  const { isOpen, closeModal } = useModalStore();
 
   if (!user) {
     return null;
@@ -85,7 +82,7 @@ export default function UserDetailsModal({ user }: UserDetailsModalProps) {
 
   return (
     <Modal
-      isOpen={isUserModalOpen}
+      isOpen={isOpen}
       onRequestClose={closeModal}
       title="User Details"
       size="md"

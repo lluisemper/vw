@@ -1,5 +1,5 @@
 // services/userService.ts
-import { fetchJSON, postJSON, putJSON, deleteJSON } from "@/services/api";
+import { fetchJSON, postJSON, putJSON, deleteJSON } from "@/services/apiClient";
 import type { User } from "@/types";
 import type { CreateUserInput, UpdateUserInput } from "@/schemas/userSchema";
 

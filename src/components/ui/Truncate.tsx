@@ -27,7 +27,7 @@ export function Truncate({
 
   // Tooltip base classes
   const tooltipBaseClasses =
-    "absolute z-50 px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm min-w-[170px] max-w-[170px] sm:max-w-xs md:max-w-sm whitespace-normal break-words [overflow-wrap:anywhere] left-1/2 transform -translate-x-1/2";
+    "absolute z-50 px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm min-w-[170px] max-w-[170px] sm:max-w-xxs lg:max-w-sm whitespace-normal break-words [overflow-wrap:anywhere] left-1/2 transform -translate-x-1/2";
 
   // Position-specific classes
   const tooltipPositionClasses =

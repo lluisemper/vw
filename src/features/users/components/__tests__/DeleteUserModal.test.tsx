@@ -49,7 +49,7 @@ vi.mock("react-modal", () => ({
 
 describe("DeleteUserModal", () => {
   const mockUser: User = {
-    id: 1,
+    id: "1",
     name: "John Doe",
     email: "john.doe@example.com",
     createdAt: "2024-01-15T10:00:00Z",
@@ -80,11 +80,15 @@ describe("DeleteUserModal", () => {
   it("should render delete confirmation modal", () => {
     render(<DeleteUserModal user={mockUser} />);
 
-    expect(screen.getByRole("heading", { name: /delete user/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /delete user/i })
+    ).toBeInTheDocument();
     expect(
       screen.getByText("Are you sure you want to delete this user?")
     ).toBeInTheDocument();
-    expect(screen.getByText("This action cannot be undone.")).toBeInTheDocument();
+    expect(
+      screen.getByText("This action cannot be undone.")
+    ).toBeInTheDocument();
     expect(screen.getByText("John Doe")).toBeInTheDocument();
     expect(screen.getByText("john.doe@example.com")).toBeInTheDocument();
   });

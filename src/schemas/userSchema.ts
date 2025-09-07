@@ -1,4 +1,4 @@
-import { object, string, number, type InferType } from "yup";
+import { object, string, type InferType } from "yup";
 
 // Create schemas using Yup's native API
 export const createUserSchema = object({
@@ -19,9 +19,7 @@ export type CreateUserInput = InferType<typeof createUserSchema>;
 // For editing users, we want full validation (not partial)
 export const updateUserSchema = createUserSchema.concat(
   object({
-    id: number()
-      .positive("User ID is required")
-      .required("User ID is required"),
+    id: string().required("User ID is required"),
     createdAt: string().required(),
   })
 );

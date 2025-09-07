@@ -14,7 +14,7 @@ vi.mock("@/features/users/services/userService");
 describe("useDeleteUser", () => {
   const mockMutate = vi.fn();
   const mockUser: User = {
-    id: 1,
+    id: "1",
     name: "John Doe",
     email: "john.doe@example.com",
     createdAt: "2024-01-15T10:00:00Z",

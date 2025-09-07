@@ -92,14 +92,14 @@ global.fetch = mockFetch;
 describe("Create User Integration", () => {
   const mockUsers: User[] = [
     {
-      id: 1,
+      id: "1",
       name: "John Doe",
       email: "john.doe@example.com",
       createdAt: "2024-01-15T10:00:00Z",
       updatedAt: "2024-01-20T15:30:00Z",
     },
     {
-      id: 2,
+      id: "2",
       name: "Jane Smith",
       email: "jane.smith@example.com",
       createdAt: "2024-01-10T08:00:00Z",
@@ -282,10 +282,14 @@ describe("Create User Integration", () => {
     // Verify API calls were made
     await waitFor(() => {
       // First call should be GET to fetch existing users
-      expect(mockFetch).toHaveBeenNthCalledWith(1, "http://localhost:3001/users");
-      
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        1,
+        "http://localhost:3001/users"
+      );
+
       // Second call should be POST to create new user
-      expect(mockFetch).toHaveBeenNthCalledWith(2,
+      expect(mockFetch).toHaveBeenNthCalledWith(
+        2,
         "http://localhost:3001/users",
         expect.objectContaining({
           method: "POST",
@@ -293,7 +297,7 @@ describe("Create User Integration", () => {
           body: expect.stringContaining('"name":"New User"'),
         })
       );
-      
+
       // Parse the POST body to verify timestamp fields and id are included
       const postCallArgs = mockFetch.mock.calls[1];
       const body = JSON.parse(postCallArgs[1].body);

@@ -22,7 +22,6 @@ export function ModalShell() {
     </div>
   );
 
-  // Only one Suspense + one lazy chunk for all user modals
   return (
     <Suspense fallback={fallback}>
       <UserModals

@@ -73,21 +73,21 @@ vi.mock("lucide-react", () => ({
 describe("User Modal Integration", () => {
   const mockUsers: User[] = [
     {
-      id: 1,
+      id: "1",
       name: "John Doe",
       email: "john.doe@example.com",
       createdAt: "2024-01-15T10:00:00Z",
       updatedAt: "2024-01-20T15:30:00Z",
     },
     {
-      id: 2,
+      id: "2",
       name: "Jane Smith",
       email: "jane.smith@example.com",
       createdAt: "2024-01-10T08:00:00Z",
       updatedAt: "2024-01-18T14:20:00Z",
     },
     {
-      id: 3,
+      id: "3",
       name: "Bob Johnson",
       email: "bob.johnson@example.com",
       createdAt: "2024-01-05T12:00:00Z",

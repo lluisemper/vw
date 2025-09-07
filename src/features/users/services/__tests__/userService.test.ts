@@ -1,16 +1,15 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { userService } from "../userService";
 import type { User } from "@/types";
+import { fetchJSON, postJSON, putJSON, deleteJSON } from "@/services/apiClient";
 
 // Mock the API module
-vi.mock("@/services/api", () => ({
+vi.mock("@/services/apiClient", () => ({
   fetchJSON: vi.fn(),
   postJSON: vi.fn(),
   putJSON: vi.fn(),
   deleteJSON: vi.fn(),
 }));
-
-import { fetchJSON, postJSON, putJSON, deleteJSON } from "@/services/api";
 
 const mockFetchJSON = vi.mocked(fetchJSON);
 const mockPostJSON = vi.mocked(postJSON);
@@ -26,7 +25,7 @@ describe("userService", () => {
     it("calls fetchJSON with correct endpoint", async () => {
       const mockUsers: User[] = [
         {
-          id: 1,
+          id: "1",
           name: "John Doe",
           email: "john@example.com",
           createdAt: "2024-01-01T00:00:00Z",
@@ -46,14 +45,14 @@ describe("userService", () => {
     it("returns array of users when successful", async () => {
       const mockUsers: User[] = [
         {
-          id: 1,
+          id: "1",
           name: "John Doe",
           email: "john@example.com",
           createdAt: "2024-01-01T00:00:00Z",
           updatedAt: "2024-01-01T00:00:00Z",
         },
         {
-          id: 2,
+          id: "2",
           name: "Jane Smith",
           email: "jane@example.com",
           createdAt: "2024-01-02T00:00:00Z",
@@ -104,7 +103,7 @@ describe("userService", () => {
     it("maintains proper TypeScript typing", async () => {
       const mockUsers: User[] = [
         {
-          id: 1,
+          id: "1",
           name: "John Doe",
           email: "john@example.com",
           createdAt: "2024-01-01T00:00:00Z",
@@ -117,7 +116,7 @@ describe("userService", () => {
       const result = await userService.getUsers();
 
       // TypeScript should infer the correct type
-      expect(result[0].id).toBe(1);
+      expect(result[0].id).toBe("1");
       expect(result[0].name).toBe("John Doe");
       expect(result[0].email).toBe("john@example.com");
       expect(typeof result[0].createdAt).toBe("string");
@@ -134,7 +133,7 @@ describe("userService", () => {
 
       const mockExistingUsers: User[] = [
         {
-          id: 1,
+          id: "1",
           name: "Existing User",
           email: "existing@example.com",
           createdAt: "2024-01-01T00:00:00Z",
@@ -143,7 +142,7 @@ describe("userService", () => {
       ];
 
       const mockCreatedUser: User = {
-        id: 2,
+        id: "2",
         name: "John Doe",
         email: "john.doe@example.com",
         createdAt: "2024-01-01T00:00:00Z",
@@ -175,7 +174,7 @@ describe("userService", () => {
 
       const mockExistingUsers: User[] = [
         {
-          id: 1,
+          id: "1",
           name: "Existing User",
           email: "existing@example.com",
           createdAt: "2024-01-01T00:00:00Z",
@@ -184,7 +183,7 @@ describe("userService", () => {
       ];
 
       const mockCreatedUser: User = {
-        id: 2,
+        id: "2",
         name: "Jane Smith",
         email: "jane.smith@example.com",
         createdAt: "2024-01-02T00:00:00Z",
@@ -211,7 +210,7 @@ describe("userService", () => {
 
       const mockExistingUsers: User[] = [
         {
-          id: 1,
+          id: "1",
           name: "test",
           email: "test",
           createdAt: "2024-01-01T00:00:00Z",
@@ -232,14 +231,14 @@ describe("userService", () => {
   describe("updateUser", () => {
     it("calls putJSON with correct endpoint and data", async () => {
       const updateData = {
-        id: 1,
+        id: "1",
         name: "John Doe Updated",
         email: "john.updated@example.com",
         createdAt: "2024-01-01T00:00:00Z",
       };
 
       const mockUpdatedUser: User = {
-        id: 1,
+        id: "1",
         name: "John Doe Updated",
         email: "john.updated@example.com",
         createdAt: "2024-01-01T00:00:00Z",
@@ -262,14 +261,14 @@ describe("userService", () => {
 
     it("returns updated user when successful", async () => {
       const updateData = {
-        id: 2,
+        id: "2",
         name: "Jane Smith Updated",
         email: "jane.updated@example.com",
         createdAt: "2024-01-02T00:00:00Z",
       };
 
       const mockUpdatedUser: User = {
-        id: 2,
+        id: "2",
         name: "Jane Smith Updated",
         email: "jane.updated@example.com",
         createdAt: "2024-01-02T00:00:00Z",
@@ -280,14 +279,14 @@ describe("userService", () => {
 
       const result = await userService.updateUser(updateData);
 
-      expect(result.id).toBe(2);
+      expect(result.id).toBe("2");
       expect(result.name).toBe("Jane Smith Updated");
       expect(result.email).toBe("jane.updated@example.com");
     });
 
     it("throws error when putJSON fails", async () => {
       const updateData = {
-        id: 1,
+        id: "1",
         name: "John Doe",
         email: "john.doe@example.com",
         createdAt: "2024-01-01T00:00:00Z",
@@ -303,13 +302,13 @@ describe("userService", () => {
 
     it("handles different user IDs correctly", async () => {
       const updateData1 = {
-        id: 5,
+        id: "5",
         name: "User Five",
         email: "user5@example.com",
         createdAt: "2024-01-01T00:00:00Z",
       };
       const updateData2 = {
-        id: 10,
+        id: "10",
         name: "User Ten",
         email: "user10@example.com",
         createdAt: "2024-01-01T00:00:00Z",
