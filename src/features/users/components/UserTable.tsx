@@ -58,7 +58,7 @@ export const UserTable = ({ users, searchBarActions }: UserTableProps) => {
               <div className="ml-3">
                 <div className="font-semibold text-gray-900">
                   <Truncate
-                    maxLength={20}
+                    maxWidth="max-w-[170px] sm:max-w-[200px] lg:max-w-[300px] truncate"
                     tooltipPosition={isFirstVisibleRow ? "bottom" : "top"}
                   >
                     {row.getValue("name") as string}
@@ -104,7 +104,7 @@ export const UserTable = ({ users, searchBarActions }: UserTableProps) => {
               <Mail className="h-4 w-4 text-gray-400 mr-2 hidden sm:block" />
               <span className="text-gray-600 transition-colors text-sm sm:text-base">
                 <Truncate
-                  maxLength={25}
+                  maxWidth="max-w-[170px] sm:max-w-[200px] lg:max-w-[300px] truncate"
                   tooltipPosition={isFirstVisibleRow ? "bottom" : "top"}
                 >
                   {row.getValue("email") as string}
