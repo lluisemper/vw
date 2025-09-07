@@ -4,7 +4,6 @@ import { useDeleteUser } from "@/features/users/hooks/useDeleteUser";
 import { useModalStore } from "@/stores/modalStore";
 import { Button, Truncate } from "@/components/ui";
 import type { User } from "@/types";
-import { useViewportWidth } from "@/hooks/useViewportWidth";
 
 interface DeleteUserModalProps {
   user: User;
@@ -13,7 +12,6 @@ interface DeleteUserModalProps {
 function DeleteUserModal({ user }: DeleteUserModalProps) {
   const { deleteUser, isLoading } = useDeleteUser();
   const { closeModal, isOpen } = useModalStore();
-  const viewportWidth = useViewportWidth();
   const handleDelete = async () => {
     const success = await deleteUser(user);
 
@@ -61,7 +59,7 @@ function DeleteUserModal({ user }: DeleteUserModalProps) {
             <div>
               <p className="font-medium text-gray-900">
                 <Truncate
-                  maxLength={viewportWidth > 490 ? 38 : 24}
+                  maxWidth="max-w-[190px] sm:max-w-[300px] truncate"
                   tooltipPosition="bottom"
                 >
                   {user.name}
@@ -69,7 +67,7 @@ function DeleteUserModal({ user }: DeleteUserModalProps) {
               </p>
               <p className="text-sm text-gray-600">
                 <Truncate
-                  maxLength={viewportWidth > 490 ? 40 : 27}
+                  maxWidth="max-w-[190px] sm:max-w-[300px] truncate"
                   tooltipPosition="bottom"
                 >
                   {user.email}
