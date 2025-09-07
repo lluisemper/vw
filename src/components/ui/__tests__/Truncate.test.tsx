@@ -48,13 +48,14 @@ describe("Truncate", () => {
     render(<Truncate maxLength={5}>This is long text</Truncate>);
     
     const truncatedElement = screen.getByText("This ...");
+    const parentContainer = truncatedElement.parentElement;
     
-    fireEvent.focus(truncatedElement);
+    fireEvent.mouseEnter(parentContainer!);
     
     expect(screen.getByRole("tooltip")).toBeInTheDocument();
     expect(screen.getByRole("tooltip")).toHaveTextContent("This is long text");
     
-    fireEvent.blur(truncatedElement);
+    fireEvent.mouseLeave(parentContainer!);
     
     expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
   });

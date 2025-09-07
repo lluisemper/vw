@@ -4,7 +4,7 @@
 
 ### Windsurf
 
-Code suggestions and draft snippets. These were reviewed and adapted with my own technical judgement to ensure they meet the project's standards. I think that this increases productivity however, it has downsides, many times it includes unnecessary things or makes assumptions that are incorrect.
+Code suggestions and draft snippets. These were reviewed and adapted with my own technical judgement to ensure they meet the project's standards. I think that this increases productivity, however, it has downsides, many times it includes unnecessary things or makes assumptions that are incorrect.
 
 This approach is mainly used to quickly create a structural template that I can build upon.
 

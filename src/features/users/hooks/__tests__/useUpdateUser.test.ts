@@ -33,7 +33,7 @@ describe("useUpdateUser", () => {
 
   it("should update user successfully", async () => {
     const mockUser = {
-      id: 1,
+      id: "1",
       name: "John Doe Updated",
       email: "john.updated@example.com",
       createdAt: "2024-01-01T00:00:00Z",
@@ -41,7 +41,7 @@ describe("useUpdateUser", () => {
     };
 
     const updateData = {
-      id: 1,
+      id: "1",
       name: "John Doe Updated",
       email: "john.updated@example.com",
       createdAt: "2024-01-01T00:00:00Z",
@@ -68,13 +68,15 @@ describe("useUpdateUser", () => {
 
   it("should handle update error", async () => {
     const updateData = {
-      id: 1,
+      id: "1",
       name: "John Doe",
       email: "john.doe@example.com",
       createdAt: "2024-01-01T00:00:00Z",
     };
 
-    mockUserService.updateUser.mockRejectedValueOnce(new Error("Update failed"));
+    mockUserService.updateUser.mockRejectedValueOnce(
+      new Error("Update failed")
+    );
 
     const { result } = renderHook(() => useUpdateUser());
 
@@ -95,7 +97,7 @@ describe("useUpdateUser", () => {
 
   it("should handle non-Error rejection", async () => {
     const updateData = {
-      id: 1,
+      id: "1",
       name: "John Doe",
       email: "john.doe@example.com",
       createdAt: "2024-01-01T00:00:00Z",
@@ -119,7 +121,7 @@ describe("useUpdateUser", () => {
 
   it("should set loading state during update", async () => {
     const mockUser = {
-      id: 1,
+      id: "1",
       name: "John Doe",
       email: "john.doe@example.com",
       createdAt: "2024-01-01T00:00:00Z",
@@ -142,7 +144,7 @@ describe("useUpdateUser", () => {
     let updateUserPromise: Promise<unknown>;
     act(() => {
       updateUserPromise = result.current.updateUser({
-        id: 1,
+        id: "1",
         name: "John Doe",
         email: "john.doe@example.com",
         createdAt: "2024-01-01T00:00:00Z",
@@ -164,7 +166,7 @@ describe("useUpdateUser", () => {
 
   it("should clear error on successful update after previous error", async () => {
     const mockUser = {
-      id: 1,
+      id: "1",
       name: "John Doe",
       email: "john.doe@example.com",
       createdAt: "2024-01-01T00:00:00Z",
@@ -178,7 +180,7 @@ describe("useUpdateUser", () => {
     await act(async () => {
       try {
         await result.current.updateUser({
-          id: 1,
+          id: "1",
           name: "John Doe",
           email: "john.doe@example.com",
           createdAt: "2024-01-01T00:00:00Z",
@@ -194,7 +196,7 @@ describe("useUpdateUser", () => {
     mockUserService.updateUser.mockResolvedValueOnce(mockUser);
     await act(async () => {
       await result.current.updateUser({
-        id: 1,
+        id: "1",
         name: "Jane Smith",
         email: "jane.smith@example.com",
         createdAt: "2024-01-01T00:00:00Z",

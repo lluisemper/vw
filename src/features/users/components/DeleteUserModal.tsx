@@ -2,8 +2,9 @@ import { UserMinus, AlertTriangle } from "lucide-react";
 import { Modal } from "@/components/ui/modal/Modal";
 import { useDeleteUser } from "@/features/users/hooks/useDeleteUser";
 import { useModalStore } from "@/stores/modalStore";
-import { Button } from "@/components/ui";
+import { Button, Truncate } from "@/components/ui";
 import type { User } from "@/types";
+import { useViewportWidth } from "@/hooks/useViewportWidth";
 
 interface DeleteUserModalProps {
   user: User;
@@ -11,11 +12,11 @@ interface DeleteUserModalProps {
 
 function DeleteUserModal({ user }: DeleteUserModalProps) {
   const { deleteUser, isLoading } = useDeleteUser();
-  const { closeModal } = useModalStore();
-
+  const { closeModal, isOpen } = useModalStore();
+  const viewportWidth = useViewportWidth();
   const handleDelete = async () => {
     const success = await deleteUser(user);
-    
+
     if (success) {
       closeModal();
     }
@@ -29,7 +30,7 @@ function DeleteUserModal({ user }: DeleteUserModalProps) {
 
   return (
     <Modal
-      isOpen={true}
+      isOpen={isOpen}
       onRequestClose={handleClose}
       title="Delete User"
       size="md"
@@ -54,12 +55,26 @@ function DeleteUserModal({ user }: DeleteUserModalProps) {
         {/* User Information */}
         <div className="bg-gray-50 rounded-lg p-4">
           <div className="flex items-center space-x-3">
-            <div className="h-10 w-10 bg-gray-200 rounded-full flex items-center justify-center">
+            <div className="h-10 w-10 bg-gray-200 rounded-full hidden sm:flex items-center justify-center">
               <UserMinus className="h-5 w-5 text-gray-600" />
             </div>
             <div>
-              <p className="font-medium text-gray-900">{user.name}</p>
-              <p className="text-sm text-gray-600">{user.email}</p>
+              <p className="font-medium text-gray-900">
+                <Truncate
+                  maxLength={viewportWidth > 490 ? 38 : 24}
+                  tooltipPosition="bottom"
+                >
+                  {user.name}
+                </Truncate>
+              </p>
+              <p className="text-sm text-gray-600">
+                <Truncate
+                  maxLength={viewportWidth > 490 ? 40 : 27}
+                  tooltipPosition="bottom"
+                >
+                  {user.email}
+                </Truncate>
+              </p>
             </div>
           </div>
         </div>
@@ -69,12 +84,10 @@ function DeleteUserModal({ user }: DeleteUserModalProps) {
           <div className="flex">
             <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
             <div className="ml-3">
-              <h4 className="text-sm font-medium text-red-800">
-                Warning
-              </h4>
+              <h4 className="text-sm font-medium text-red-800">Warning</h4>
               <p className="text-sm text-red-700 mt-1">
-                Once you delete this user, all their data will be permanently removed 
-                from the system. This action cannot be undone.
+                Once you delete this user, all their data will be permanently
+                removed from the system. This action cannot be undone.
               </p>
             </div>
           </div>

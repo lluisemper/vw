@@ -20,7 +20,7 @@ interface EditUserModalProps {
 
 function EditUserModal({ user }: EditUserModalProps) {
   const [formData, setFormData] = useState<UpdateUserInput>({
-    id: Number(user.id),
+    id: user.id,
     name: user.name,
     email: user.email,
     createdAt: user.createdAt,
@@ -32,7 +32,7 @@ function EditUserModal({ user }: EditUserModalProps) {
   // Reset form data when user changes (if modal is reused)
   useEffect(() => {
     setFormData({
-      id: Number(user.id),
+      id: user.id,
       name: user.name,
       email: user.email,
       createdAt: user.createdAt,
@@ -119,7 +119,7 @@ function EditUserModal({ user }: EditUserModalProps) {
     if (!isLoading) {
       // Reset form to original user data on close
       setFormData({
-        id: Number(user.id),
+        id: user.id,
         name: user.name,
         email: user.email,
         createdAt: user.createdAt,

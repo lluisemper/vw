@@ -20,6 +20,7 @@ import {
   PaginationControls,
   EmptyState,
 } from "@/components/ui/table";
+import { getSearchDelay } from "@/utils/debounce";
 
 interface GenericDataTableProps<TData> {
   data: TData[];
@@ -91,46 +92,6 @@ export function GenericDataTable<TData>({
   const totalPages = table.getPageCount();
   const pageSize = table.getState().pagination.pageSize;
 
-  // Handle empty data state
-  if (data.length === 0 || filteredRowCount === 0) {
-    return (
-      <div className={className}>
-        {/* Search Bar with Actions */}
-        {showSearch && (
-          <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <SearchBar
-              value={globalFilter ?? ""}
-              onChange={setGlobalFilter}
-              placeholder={searchPlaceholder}
-            />
-            {searchBarActions && (
-              <div className="flex-shrink-0">{searchBarActions}</div>
-            )}
-          </div>
-        )}
-
-        {/* Data Count */}
-        {showDataCount && data.length > 0 && (
-          <div className="flex items-center text-sm text-gray-700 bg-gray-50 px-3 py-2 rounded-lg w-fit">
-            <Users className="h-4 w-4 mr-1.5 text-gray-500" />
-            <span className="hidden sm:inline">
-              {filteredRowCount} of {data.length} {dataCountLabel}
-            </span>
-            <span className="sm:hidden">
-              {filteredRowCount}/{data.length}
-            </span>
-          </div>
-        )}
-
-        <EmptyState
-          columns={columns.length}
-          emptyStateComponent={emptyStateComponent}
-          message={data.length === 0 ? "No data available" : "No results found"}
-        />
-      </div>
-    );
-  }
-
   return (
     <div className={className}>
       {/* Search Bar with Actions */}
@@ -140,6 +101,7 @@ export function GenericDataTable<TData>({
             value={globalFilter ?? ""}
             onChange={setGlobalFilter}
             placeholder={searchPlaceholder}
+            delay={getSearchDelay(data.length)}
           />
           {searchBarActions && (
             <div className="flex-shrink-0">{searchBarActions}</div>
@@ -159,69 +121,79 @@ export function GenericDataTable<TData>({
           </span>
         </div>
       )}
-
-      {/* Table */}
-      <Table>
-        <thead className="bg-gray-50/50 backdrop-blur-sm">
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <TableHeader key={header.id} header={header} />
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <TableBody>
-          {table.getRowModel().rows.map((row) => {
-            const isExpanded = expandedRows.has(row.id);
-
-            return (
-              <React.Fragment key={row.id}>
-                <TableRow>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      key={cell.id}
-                      responsiveClass={
-                        cell.column.columnDef.meta?.responsiveClass || ""
-                      }
-                    >
-                      {flexRender(cell.column.columnDef.cell, {
-                        ...cell.getContext(),
-                        toggleRowExpansion: () => toggleRowExpansion(row.id),
-                        isExpanded,
-                      })}
-                    </TableCell>
-                  ))}
-                </TableRow>
-                {/* Mobile expanded content */}
-                {isExpanded && renderExpandedRow && (
-                  <tr className="md:hidden">
-                    <td colSpan={columns.length} className="p-0">
-                      {renderExpandedRow(row.original)}
-                    </td>
-                  </tr>
-                )}
-              </React.Fragment>
-            );
-          })}
-        </TableBody>
-      </Table>
-
-      {/* Pagination */}
-      {showPagination && (
-        <PaginationControls
-          currentPage={currentPage}
-          totalPages={totalPages}
-          pageSize={pageSize}
-          totalItems={data.length}
-          canPreviousPage={table.getCanPreviousPage()}
-          canNextPage={table.getCanNextPage()}
-          onFirstPage={() => table.setPageIndex(0)}
-          onPreviousPage={() => table.previousPage()}
-          onNextPage={() => table.nextPage()}
-          onLastPage={() => table.setPageIndex(table.getPageCount() - 1)}
-          onPageSizeChange={(newPageSize) => table.setPageSize(newPageSize)}
+      {data.length === 0 || filteredRowCount === 0 ? (
+        <EmptyState
+          columns={columns.length}
+          emptyStateComponent={emptyStateComponent}
+          message={data.length === 0 ? "No data available" : "No results found"}
         />
+      ) : (
+        <>
+          {/* Table */}
+          <Table>
+            <thead className="bg-gray-50/50 backdrop-blur-sm">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <tr key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <TableHeader key={header.id} header={header} />
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <TableBody>
+              {table.getRowModel().rows.map((row) => {
+                const isExpanded = expandedRows.has(row.id);
+
+                return (
+                  <React.Fragment key={row.id}>
+                    <TableRow>
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell
+                          key={cell.id}
+                          className={
+                            cell.column.columnDef.meta?.responsiveClass || ""
+                          }
+                        >
+                          {flexRender(cell.column.columnDef.cell, {
+                            ...cell.getContext(),
+                            toggleRowExpansion: () =>
+                              toggleRowExpansion(row.id),
+                            isExpanded,
+                          })}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                    {/* Mobile expanded content */}
+                    {isExpanded && renderExpandedRow && (
+                      <tr className="md:hidden">
+                        <td colSpan={columns.length} className="p-0">
+                          {renderExpandedRow(row.original)}
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
+                );
+              })}
+            </TableBody>
+          </Table>
+
+          {/* Pagination */}
+          {showPagination && (
+            <PaginationControls
+              currentPage={currentPage}
+              totalPages={totalPages}
+              pageSize={pageSize}
+              totalItems={data.length}
+              canPreviousPage={table.getCanPreviousPage()}
+              canNextPage={table.getCanNextPage()}
+              onFirstPage={() => table.setPageIndex(0)}
+              onPreviousPage={() => table.previousPage()}
+              onNextPage={() => table.nextPage()}
+              onLastPage={() => table.setPageIndex(table.getPageCount() - 1)}
+              onPageSizeChange={(newPageSize) => table.setPageSize(newPageSize)}
+            />
+          )}
+        </>
       )}
     </div>
   );

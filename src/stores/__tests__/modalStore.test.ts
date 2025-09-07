@@ -17,7 +17,7 @@ describe("modalStore", () => {
   it("should open modal with type and data", () => {
     const { openModal } = useModalStore.getState();
     const testData = {
-      id: 1,
+      id: "1",
       name: "Test User",
       email: "test@example.com",
       createdAt: "2024-01-01T00:00:00Z",
@@ -36,7 +36,7 @@ describe("modalStore", () => {
     const { openModal, closeModal } = useModalStore.getState();
 
     openModal("userDetails", {
-      id: 1,
+      id: "1",
       name: "Test User",
       email: "test@example.com",
       createdAt: "2024-01-01T00:00:00Z",
@@ -54,7 +54,7 @@ describe("modalStore", () => {
     const { openModal, closeModal } = useModalStore.getState();
 
     const firstUser = {
-      id: 1,
+      id: "1",
       name: "First User",
       email: "first@example.com",
       createdAt: "2024-01-01T00:00:00Z",
@@ -66,7 +66,7 @@ describe("modalStore", () => {
     expect(state.modalData).toEqual(firstUser);
 
     const secondUser = {
-      id: 2,
+      id: "2",
       name: "Second User",
       email: "second@example.com",
       createdAt: "2024-01-02T00:00:00Z",

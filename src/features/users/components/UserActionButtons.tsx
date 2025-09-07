@@ -7,7 +7,10 @@ interface UserActionButtonsProps {
   user: User;
   variant?: "table" | "expanded";
 }
-
+// Domain-specific component: UserActionButtons
+// - Only used in the User domain, not intended for general reuse
+// - Could add props like `size` or `className` if needed in the future
+// - Keeps the API simple to avoid unnecessary complexity
 export const UserActionButtons = ({
   user,
   variant = "table",

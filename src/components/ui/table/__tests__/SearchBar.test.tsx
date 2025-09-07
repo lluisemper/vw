@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SearchBar } from "../SearchBar";
 
@@ -34,19 +34,27 @@ describe("SearchBar", () => {
     expect(screen.getByDisplayValue("test search")).toBeInTheDocument();
   });
 
-  it("calls onChange correctly when user types", async () => {
+  it("calls onChange after debounce delay when user types", async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
 
-    renderSearchBar({ onChange });
+    renderSearchBar({ onChange, delay: 100 });
 
     const input = screen.getByRole("textbox");
     await user.type(input, "abc");
 
-    expect(onChange).toHaveBeenCalledTimes(3);
-    expect(onChange).toHaveBeenNthCalledWith(1, "a");
-    expect(onChange).toHaveBeenNthCalledWith(2, "b");
-    expect(onChange).toHaveBeenNthCalledWith(3, "c");
+    // onChange should not be called immediately
+    expect(onChange).not.toHaveBeenCalled();
+
+    // Wait for debounce delay
+    await waitFor(
+      () => {
+        expect(onChange).toHaveBeenCalledTimes(1);
+      },
+      { timeout: 200 }
+    );
+
+    expect(onChange).toHaveBeenCalledWith("abc");
   });
 
   it("uses default placeholder", () => {
@@ -70,5 +78,73 @@ describe("SearchBar", () => {
     const input = screen.getByRole("textbox");
     expect(input).toHaveAttribute("placeholder", "Search...");
     expect(input).toHaveAttribute("type", "text");
+  });
+
+  it("calls onChange immediately when delay is 0", async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+
+    renderSearchBar({ onChange, delay: 0 });
+
+    const input = screen.getByRole("textbox");
+    await user.type(input, "test");
+
+    // With delay: 0, onChange should be called for each character + potentially initial empty value
+    await waitFor(() => {
+      expect(onChange).toHaveBeenCalled();
+      expect(onChange.mock.calls.length).toBeGreaterThanOrEqual(4);
+    });
+
+    // Should end with the final value
+    expect(onChange).toHaveBeenLastCalledWith("test");
+  });
+
+  it("debounces multiple rapid changes", async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+
+    renderSearchBar({ onChange, delay: 100 });
+
+    const input = screen.getByRole("textbox");
+    
+    // Type rapidly
+    await user.type(input, "test");
+    
+    // Should not have called onChange yet
+    expect(onChange).not.toHaveBeenCalled();
+    
+    // Wait for debounce
+    await waitFor(
+      () => {
+        expect(onChange).toHaveBeenCalledTimes(1);
+      },
+      { timeout: 200 }
+    );
+    
+    expect(onChange).toHaveBeenCalledWith("test");
+  });
+
+  it("updates input value immediately while debouncing onChange", async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+
+    renderSearchBar({ onChange, delay: 100 });
+
+    const input = screen.getByRole("textbox");
+    await user.type(input, "abc");
+
+    // Input should show the value immediately
+    expect(input).toHaveValue("abc");
+    
+    // But onChange should not be called yet
+    expect(onChange).not.toHaveBeenCalled();
+
+    // Wait for debounce
+    await waitFor(
+      () => {
+        expect(onChange).toHaveBeenCalledWith("abc");
+      },
+      { timeout: 200 }
+    );
   });
 });

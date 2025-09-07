@@ -18,16 +18,16 @@ vi.mock("lucide-react", () => ({
 }));
 
 interface TestData {
-  id: number;
+  id: string;
   name: string;
   email: string;
 }
 
 describe("GenericDataTable", () => {
   const mockData: TestData[] = [
-    { id: 1, name: "John Doe", email: "john@example.com" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com" },
-    { id: 3, name: "Bob Johnson", email: "bob@example.com" },
+    { id: "1", name: "John Doe", email: "john@example.com" },
+    { id: "2", name: "Jane Smith", email: "jane@example.com" },
+    { id: "3", name: "Bob Johnson", email: "bob@example.com" },
   ];
 
   const mockColumns: ColumnDef<TestData>[] = [
@@ -258,7 +258,7 @@ describe("GenericDataTable", () => {
 
   it("handles expanded row interaction with click simulation", async () => {
     const largeDataset = Array.from({ length: 25 }, (_, i) => ({
-      id: i + 1,
+      id: String(i + 1),
       name: `User ${i + 1}`,
       email: `user${i + 1}@example.com`,
     }));
@@ -296,7 +296,7 @@ describe("GenericDataTable", () => {
 
     // Create a larger dataset that will span multiple pages
     const largeDataset = Array.from({ length: 15 }, (_, i) => ({
-      id: i + 1,
+      id: String(i + 1),
       name: `User ${i + 1}`,
       email: `user${i + 1}@example.com`,
     }));
@@ -375,7 +375,7 @@ describe("GenericDataTable", () => {
 
     // Create dataset with 25 items
     const largeDataset = Array.from({ length: 25 }, (_, i) => ({
-      id: i + 1,
+      id: String(i + 1),
       name: `User ${i + 1}`,
       email: `user${i + 1}@example.com`,
     }));

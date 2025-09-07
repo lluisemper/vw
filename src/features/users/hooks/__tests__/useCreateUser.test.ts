@@ -33,7 +33,7 @@ describe("useCreateUser", () => {
 
   it("should create user successfully", async () => {
     const mockUser = {
-      id: 1,
+      id: "1",
       name: "John Doe",
       email: "john.doe@example.com",
       createdAt: "2024-01-01T00:00:00Z",
@@ -115,7 +115,7 @@ describe("useCreateUser", () => {
 
   it("should set loading state during creation", async () => {
     const mockUser = {
-      id: 1,
+      id: "1",
       name: "John Doe",
       email: "john.doe@example.com",
       createdAt: "2024-01-01T00:00:00Z",
@@ -158,7 +158,7 @@ describe("useCreateUser", () => {
 
   it("should clear error on successful creation after previous error", async () => {
     const mockUser = {
-      id: 1,
+      id: "1",
       name: "John Doe",
       email: "john.doe@example.com",
       createdAt: "2024-01-01T00:00:00Z",

@@ -6,22 +6,33 @@ The backend is just a tiny json server for testing purposes/mocked API.
 
 The frontend is a React + TypeScript demo application that consumes a mocked API to display, create, update, and delete items in a data table. The application features:
 
-- DataTable with sorting, searching, and pagination
+- DataTable with sorting, searching(apart from dates), and pagination
 - CRUD operations with modals for adding and editing items
 - State management using Zustand
 - UI styling with Tailwind CSS
 - Accessible modals using React Modal
 - Responsive design suitable for desktop and mobile devices
+- Most recent versions of the packages used.
 
 The purpose of this project is to demonstrate React frontend skills, state management, component design, and asynchronous data handling in a small, maintainable application.
+
+#### Run project
+
+**Recommended nodejs version**: 22
+How to set it with nvm: `nvm use`
+
+Install dependencies: `npm install`
+
+Run dev: `npm run dev`
+
+#### Build project
+
+`npm run build`
+To preview bundled code `npm run preview`
 
 #### TESTING NOTE
 
 For testing styles I would prefer to use e2e testing or visual regression testing. That way representing a more real scenario, you want to see on the real world how it looks. Checking for classes on unit testing I do not think it is meaningful in most cases.
-
-#### Optimization
-
-Lazy load of the modal, only loaded when needed.
 
 <!-- TODO: project’s deployment, configuration and execution steps. -->
 
@@ -85,6 +96,16 @@ Summary:
 Branch protection on master branch, can only merge with PR.
 
 Commit guidelines: ...
+
+#### Optimization
+
+Lazy load of the modal and validation, only loaded when needed.
+
+Main table is not using Suspense, instead uses an AsyncBoundary. If we were to wrap the main part of the app in a Suspense, this would create another chunk and probably react would delay rendering of the entire subtree.
+
+There is a useMemo to stop the columns from the tanstack table from rendering more than necessary, this was recommended by tanstack documentation.
+
+Search is debounced depending of the size of the data set. No debouncing when less than 100 results. Little debouncing between 100 and 1000 dataset results. 0.5 milliseconds debouncing when more than 1000 results.
 
 #### Bundle Optimization
 

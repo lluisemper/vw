@@ -51,7 +51,7 @@ describe("EditUserModal", () => {
   const mockCloseModal = vi.fn();
 
   const mockUser: User = {
-    id: 1,
+    id: "1",
     name: "John Doe",
     email: "john.doe@example.com",
     createdAt: "2024-01-01T00:00:00Z",
@@ -210,7 +210,7 @@ describe("EditUserModal", () => {
 
     await waitFor(() => {
       expect(mockUpdateUser).toHaveBeenCalledWith({
-        id: 1,
+        id: "1",
         name: "Jane Doe",
         email: "jane.doe@example.com",
         createdAt: "2024-01-01T00:00:00Z",
@@ -314,7 +314,7 @@ describe("EditUserModal", () => {
 
     const newUser: User = {
       ...mockUser,
-      id: 2,
+      id: "2",
       name: "Jane Smith",
       email: "jane.smith@example.com",
     };
@@ -379,7 +379,7 @@ describe("EditUserModal", () => {
     // Verify the updateUser was called with correct data structure
     await waitFor(() => {
       expect(mockUpdateUser).toHaveBeenCalledWith({
-        id: 1,
+        id: "1",
         name: "Updated Name",
         email: "updated@example.com",
         createdAt: "2024-01-01T00:00:00Z", // Preserved from original user
@@ -456,7 +456,7 @@ describe("EditUserModal", () => {
     await waitFor(() => {
       expect(mockUpdateUser).toHaveBeenCalledWith(
         expect.objectContaining({
-          id: 1,
+          id: "1",
           name: "New Name",
           email: "new@email.com",
           createdAt: "2023-12-01T10:30:00Z", // Original createdAt preserved

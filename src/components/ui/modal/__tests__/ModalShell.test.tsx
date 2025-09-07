@@ -75,7 +75,7 @@ describe("ModalShell", () => {
 
   it('should render UserDetailsModal when modalType is "userDetails"', async () => {
     const mockUser = {
-      id: 1,
+      id: "1",
       name: "John Doe",
       email: "john@example.com",
     };
