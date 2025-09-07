@@ -118,3 +118,44 @@ Commit guidelines: ...
 #### Known issue
 
 When creating a user I do an extra get request of the users to get the last id and to be able to assign a next one. This would not be implemented in a system with a real API that generates the IDs in the backend.
+
+#### YAGNI principle for domain specific components
+
+Domain specific components are not likely to be shared at lot. Therefore I rather keep them as simple as possible
+
+#### Clean architecture
+
+**Folder Structure**:
+
+```
+[ Domain Layer ]
+   ├── types/
+   ├── schemas/
+   └── features/users/types/
+
+[ Application Layer ]
+   ├── features/users/hooks/
+   ├── features/users/services/
+   └── stores/
+
+[ Interface Layer ]
+   ├── UI Primitives
+   │     ├── components/ui/
+   │     ├── components/forms/
+   │     ├── components/feedback/
+   │     ├── components/data-table/
+   │     └── utils/
+   └── Feature UI
+         └── features/users/components/
+
+[ Framework ]
+   ├── App.tsx
+   ├── main.tsx
+   └── index.css
+
+[ Tests ]
+   Wrap all layers:
+   - Unit tests (schema, hooks, UI primitives)
+   - Integration tests (feature components + hooks/services)
+
+```
