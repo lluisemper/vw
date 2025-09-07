@@ -40,7 +40,10 @@ function UserDetailsContent({ user }: { user: User }) {
         </div>
         <div>
           <h3 className="text-lg font-semibold text-gray-900">
-            <Truncate maxLength={30} tooltipPosition="bottom">
+            <Truncate
+              maxWidth="max-w-[180px] sm:max-w-[300px] truncate"
+              tooltipPosition="bottom"
+            >
               {user.name}
             </Truncate>
           </h3>
@@ -53,7 +56,10 @@ function UserDetailsContent({ user }: { user: User }) {
           icon={Mail}
           label="Email Address"
           value={
-            <Truncate maxLength={40} tooltipPosition="bottom">
+            <Truncate
+              maxWidth="max-w-[340px] truncate"
+              tooltipPosition="bottom"
+            >
               {user.email}
             </Truncate>
           }
