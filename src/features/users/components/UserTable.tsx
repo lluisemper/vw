@@ -13,6 +13,7 @@ import type { User } from "@/types";
 import { formatDate } from "@/utils/dateUtils";
 import { GenericDataTable } from "@/components/data-table/GenericDataTable";
 import { UserActionButtons } from "./UserActionButtons";
+import { Truncate } from "@/components/ui";
 
 interface UserTableProps {
   users: User[];
@@ -43,8 +44,10 @@ export const UserTable = ({ users, searchBarActions }: UserTableProps) => {
       {
         accessorKey: "name",
         header: "Name",
-        cell: ({ row, ...context }) => {
+        cell: ({ row, table, ...context }) => {
           const cellContext = context as CellContext;
+          const visibleRows = table.getRowModel().rows;
+          const isFirstVisibleRow = visibleRows[0]?.id === row.id;
           return (
             <div className="flex items-center">
               <div className="hidden sm:block flex-shrink-0 h-8 w-8">
@@ -54,7 +57,12 @@ export const UserTable = ({ users, searchBarActions }: UserTableProps) => {
               </div>
               <div className="ml-3">
                 <div className="font-semibold text-gray-900">
-                  {row.getValue("name")}
+                  <Truncate
+                    maxLength={20}
+                    tooltipPosition={isFirstVisibleRow ? "bottom" : "top"}
+                  >
+                    {row.getValue("name") as string}
+                  </Truncate>
                 </div>
               </div>
               {/* Mobile expand/collapse button */}
@@ -88,14 +96,23 @@ export const UserTable = ({ users, searchBarActions }: UserTableProps) => {
       {
         accessorKey: "email",
         header: "Email",
-        cell: ({ row }) => (
-          <div className="flex items-center">
-            <Mail className="h-4 w-4 text-gray-400 mr-2 hidden sm:block" />
-            <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm sm:text-base">
-              {row.getValue("email")}
-            </span>
-          </div>
-        ),
+        cell: ({ row, table }) => {
+          const visibleRows = table.getRowModel().rows;
+          const isFirstVisibleRow = visibleRows[0]?.id === row.id;
+          return (
+            <div className="flex items-center">
+              <Mail className="h-4 w-4 text-gray-400 mr-2 hidden sm:block" />
+              <span className="text-gray-600 transition-colors text-sm sm:text-base">
+                <Truncate
+                  maxLength={25}
+                  tooltipPosition={isFirstVisibleRow ? "bottom" : "top"}
+                >
+                  {row.getValue("email") as string}
+                </Truncate>
+              </span>
+            </div>
+          );
+        },
         meta: {
           responsiveClass: "", // Always visible
         },
