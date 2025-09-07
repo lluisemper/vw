@@ -10,10 +10,10 @@ export const userService = {
     const users = await fetchJSON<User[]>("/users");
     const nextId = Number(users[users.length - 1].id) + 1;
     return postJSON<
-      CreateUserInput & { id: number; createdAt: string; updatedAt: string },
+      CreateUserInput & { id: string; createdAt: string; updatedAt: string },
       User
     >("/users", {
-      id: nextId,
+      id: String(nextId),
       ...userData,
       createdAt: now,
       updatedAt: now,
