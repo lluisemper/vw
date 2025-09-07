@@ -5,7 +5,7 @@ interface TruncateProps {
   maxLength?: number;
   className?: string;
   showTooltip?: boolean;
-  tooltipPosition?: "top" | "bottom"; // new prop
+  tooltipPosition?: "top" | "bottom";
 }
 
 export function Truncate({
@@ -25,28 +25,33 @@ export function Truncate({
     return <span className={className}>{children}</span>;
   }
 
-  // Shared tooltip classes
+  // Tooltip base classes
   const tooltipBaseClasses =
-    "absolute z-50 px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm max-w-[170px] sm:max-w-xs  whitespace-normal break-words [overflow-wrap:anywhere] left-1/2 transform -translate-x-1/2";
+    "absolute z-50 px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm min-w-[170px] max-w-[170px] sm:max-w-xs md:max-w-sm whitespace-normal break-words [overflow-wrap:anywhere] left-1/2 transform -translate-x-1/2";
 
   // Position-specific classes
   const tooltipPositionClasses =
     tooltipPosition === "top" ? "bottom-full mb-1" : "top-full mt-1";
 
-  // Arrow position classes
   const arrowPositionClasses =
     tooltipPosition === "top"
       ? "top-full border-t-gray-900 -mt-[1px]"
       : "bottom-full border-b-gray-900 -mb-[1px]";
 
+  // Handlers to keep tooltip open when hovering text or tooltip
+  const handleMouseEnter = () => showTooltip && setShowTooltipState(true);
+  const handleMouseLeave = () => showTooltip && setShowTooltipState(false);
+
   return (
-    <span className={`relative ${className}`}>
+    <span
+      className={`relative ${className}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onFocus={handleMouseEnter}
+      onBlur={handleMouseLeave}
+    >
       <span
         className="cursor-help"
-        onMouseEnter={() => showTooltip && setShowTooltipState(true)}
-        onMouseLeave={() => setShowTooltipState(false)}
-        onFocus={() => showTooltip && setShowTooltipState(true)}
-        onBlur={() => setShowTooltipState(false)}
         tabIndex={0}
         aria-label={children}
         role="button"

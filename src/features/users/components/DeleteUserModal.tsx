@@ -2,7 +2,7 @@ import { UserMinus, AlertTriangle } from "lucide-react";
 import { Modal } from "@/components/ui/modal/Modal";
 import { useDeleteUser } from "@/features/users/hooks/useDeleteUser";
 import { useModalStore } from "@/stores/modalStore";
-import { Button } from "@/components/ui";
+import { Button, Truncate } from "@/components/ui";
 import type { User } from "@/types";
 
 interface DeleteUserModalProps {
@@ -58,8 +58,16 @@ function DeleteUserModal({ user }: DeleteUserModalProps) {
               <UserMinus className="h-5 w-5 text-gray-600" />
             </div>
             <div>
-              <p className="font-medium text-gray-900">{user.name}</p>
-              <p className="text-sm text-gray-600">{user.email}</p>
+              <p className="font-medium text-gray-900">
+                <Truncate maxLength={30} tooltipPosition="bottom">
+                  {user.name}
+                </Truncate>
+              </p>
+              <p className="text-sm text-gray-600">
+                <Truncate maxLength={35} tooltipPosition="bottom">
+                  {user.email}
+                </Truncate>
+              </p>
             </div>
           </div>
         </div>

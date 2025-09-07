@@ -1,10 +1,12 @@
 import { Search } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface SearchBarProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
   className?: string;
+  delay?: number; // in ms
 }
 
 export function SearchBar({
@@ -12,7 +14,21 @@ export function SearchBar({
   onChange,
   placeholder = "Search...",
   className = "",
+  delay = 1000,
 }: SearchBarProps) {
+  const [inputValue, setInputValue] = useState(value);
+
+  useEffect(() => {
+    if (!delay) {
+      onChange(inputValue);
+      return;
+    }
+    const handler = setTimeout(() => {
+      onChange(inputValue);
+    }, delay);
+
+    return () => clearTimeout(handler);
+  }, [inputValue, onChange, delay]);
   return (
     <div
       className={`flex-1 w-full max-w-xxl md:max-w-lg ${className}`}
@@ -28,8 +44,8 @@ export function SearchBar({
         <input
           id="search"
           type="text"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
           placeholder={placeholder}
           className="block w-full rounded-lg border-0 py-2.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 transition-all duration-200"
         />

@@ -3,6 +3,7 @@ import { useModalStore } from "@/stores/modalStore";
 import type { User } from "@/types";
 import { formatDate } from "@/utils/dateUtils";
 import { User as UserIcon, Mail, Calendar, Clock } from "lucide-react";
+import { Truncate } from "@/components/ui";
 
 interface UserDetailsModalProps {
   user: User | null;
@@ -15,7 +16,7 @@ function UserDetailField({
 }: {
   icon: React.ComponentType<{ className?: string }>;
   label: string;
-  value: string;
+  value: string | React.ReactNode;
 }) {
   return (
     <div className="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg">
@@ -38,13 +39,25 @@ function UserDetailsContent({ user }: { user: User }) {
           <UserIcon className="h-8 w-8 text-blue-600" />
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-gray-900">{user.name}</h3>
+          <h3 className="text-lg font-semibold text-gray-900">
+            <Truncate maxLength={30} tooltipPosition="bottom">
+              {user.name}
+            </Truncate>
+          </h3>
           <p className="text-sm text-gray-500">User ID: {user.id}</p>
         </div>
       </div>
 
       <div className="space-y-4">
-        <UserDetailField icon={Mail} label="Email Address" value={user.email} />
+        <UserDetailField 
+          icon={Mail} 
+          label="Email Address" 
+          value={
+            <Truncate maxLength={40} tooltipPosition="bottom">
+              {user.email}
+            </Truncate>
+          } 
+        />
         <UserDetailField
           icon={Calendar}
           label="Created"

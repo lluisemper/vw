@@ -126,6 +126,7 @@ export const UserTable = ({ users, searchBarActions }: UserTableProps) => {
           </div>
         ),
         sortingFn: "datetime",
+        enableGlobalFilter: false,
         meta: {
           responsiveClass: "hidden lg:table-cell",
         },
@@ -139,6 +140,7 @@ export const UserTable = ({ users, searchBarActions }: UserTableProps) => {
           </div>
         ),
         sortingFn: "datetime",
+        enableGlobalFilter: false,
         meta: {
           responsiveClass: "hidden md:table-cell",
         },
