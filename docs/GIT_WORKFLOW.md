@@ -9,6 +9,7 @@ Branch protection on master branch, can only merge with PR.
 - main: Production-ready code
 - develop: Integration branch for features
 - issue#<issue-number>: Individual feature development
+- Branches are deleted after merging into main(default) branch to keep the repository clean
 
 # Commit Guidelines
 
