@@ -4,11 +4,14 @@
 
 ### Windsurf
 
-Code suggestions and draft snippets. These were reviewed and adapted with my own technical judgement to ensure they meet the project's standards. I think that this increases productivity, however, it has downsides, many times it includes unnecessary things or makes assumptions that are incorrect.
+- Used for code scaffolding and quick snippets (e.g., typed LoaderSpinner with Tailwind).
+- Reviewed and adapted manually to ensure project standards.
+- Pros: increases productivity, helps create structure quickly.
+- Cons: may include unnecessary code or incorrect assumptions.
 
 This approach is mainly used to quickly create a structural template that I can build upon.
 
-Example usage:
+#### Examples:
 
 ```
 Generate a typed LoaderSpinner that can be reused using tailwind.
@@ -18,9 +21,12 @@ Generate a typed LoaderSpinner that can be reused using tailwind.
 
 I have used Claude AI because I can select wether the data is shared. Also I like the response more than other agents like chatgpt, for example, which it always has a very positive attitude.
 
-Particularly, it has helped me compare technical tools and patterns using libraries that are new to me. This provides a good overview and allows me to compare my ideas with the suggestions. Additionally, it sometimes highlights things I might have overlooked. However, I make sure not to over complicate things.
+- Used for architectural and technical guidance, comparing frameworks, state management solutions, and design patterns.
+- Pros: Provides trade-off analysis, highlights overlooked factors, helps with rapid comparison.
+- Cons: Requires human judgement to adapt suggestions.
+- All AI outputs were critically reviewed before implementation.
 
-**Specific Questions Asked:**
+#### Examples:
 
 #### question:
 
@@ -150,6 +156,6 @@ Generate 100 results of mock data in json format with this structure:
 
 #### question
 
-- Show me good patterns using zusthand.
+- Show me good patterns using zustand.
 
-First time using zusthand and I wanted to speed up learning curve.
+First time using zustand and I wanted to speed up learning curve.
