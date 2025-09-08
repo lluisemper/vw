@@ -11,21 +11,24 @@
    └── features/users/types/
 
 [ Application Layer ]
-   ├── features/users/hooks/
-   ├── features/users/services/
-   ├── services/
-   └── stores/
+   └── features/users/services/
 
 [ Interface Layer ]
-   ├── UI Primitives
-   │     ├── components/ui/
-   │     ├── components/forms/
-   │     ├── components/feedback/
-   │     └── components/data-table/
-   │
-   └── Feature UI
-   │     └── features/users/components/
-   └── utils/
+├── UI Primitives
+│     ├── components/ui/
+│     ├── components/forms/
+│     ├── components/feedback/
+│     └── components/data-table/
+│
+├── Feature UI
+│     └── features/users/components/
+│
+└── Adapters UI
+      ├── features/users/hooks/
+      ├── services/apiClient
+      ├── stores/
+      └── utils/
+
 
 [ Framework ]
    ├── App.tsx
