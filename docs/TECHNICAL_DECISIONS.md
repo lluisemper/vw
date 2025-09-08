@@ -2,7 +2,15 @@
 
 ## State Management
 
-**Zustand**
+### Principles
+
+- **Server-side state** → Remote data from APIs, fetched and revalidated with **SWR**
+- **Client-side state** → Global UI state managed via **Zustand**
+- **Component state** → Local, ephemeral state via `useState`
+
+### Tooling
+
+**Zustand – Client State**
 
 **Reasoning:**
 
@@ -11,9 +19,14 @@
 - Minimal setup
 - Fits well for small-to-medium demo apps where performance and readability matter
 
-**Cons / Limitations:**
+**SWR – Data Fetching**
 
-- No built-in devtools for complex state trees
+**Reasoning:**
+
+- Clear separation of server and client state
+- Deduplication safeguard for repeated requests
+- Provides caching and refetch helpers
+- Scales well if the app grows, even if some features aren’t strictly needed for a small demo
 
 ---
 
@@ -58,16 +71,3 @@
 **Cons / Limitations:**
 
 - Advanced features (virtual scrolling, complex grouping) require additional setup
-
----
-
-## Data Fetching
-
-**SWR**
-
-**Reasoning:**
-
-- Avoids mixing server and client state
-- Deduplication safeguard for repeated requests
-- Provides caching and refetch helpers
-- Scales well if the app grows, even if some features aren’t strictly needed for a small demo
